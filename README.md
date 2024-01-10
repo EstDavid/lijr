@@ -31,3 +31,7 @@ Chart visualization: ReactVis
 
 Database: MongoDB and Mongoose as ORM
 Server: GraphQL
+
+Dev dependencies:
+
+- @faker-js/faker &rarr; Allows generation of mock data
