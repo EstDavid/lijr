@@ -1,11 +1,13 @@
-const users = [
+const { v1: uuid } = require('uuid');
+
+let users = [
   {
     _id: '9c66cf0b-64e0-4de9-aade-03dc7f74a4ea',
     createdAt: '2012-10-20',
     updatedAt: '2021-08-05',
     email: 'Blaise_Donnelly35@gmail.com',
     password: '0ytZZin8xekQi3F',
-    name: 'Phoebe',
+    firstName: 'Phoebe',
     birthDate: '1962-01-11'
   },
   {
@@ -14,7 +16,7 @@ const users = [
     updatedAt: '2020-09-11',
     email: 'Lorenz46@yahoo.com',
     password: 'htw5IMGqcMb_puW',
-    name: 'Otha',
+    firstName: 'Otha',
     birthDate: '1991-03-12'
   },
   {
@@ -23,15 +25,29 @@ const users = [
     updatedAt: '2022-08-08',
     email: 'Isadore60@hotmail.com',
     password: 'kahEr26eVE0uN2d',
-    name: 'Sonia',
+    firstName: 'Sonia',
     birthDate: '1967-05-09'
   }
 ];
 
+// TODO: Add error handling as in https://fullstackopen.com/en/part8/graph_ql_server#error-handling
+
 const resolvers = {
   Query: {
     userCount: () => users.length,
-    getUserById: (root, args) => users.find(u => u._id === args.id),
+    getUserById: (root, args) => users.find(u => u._id === args.userId),
+  },
+  Mutation: {
+    addUser: (root, args) => {
+      const newUser = {
+        ...args,
+        _id: uuid(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      users = users.concat(newUser);
+      return newUser;
+    }
   }
 };
 

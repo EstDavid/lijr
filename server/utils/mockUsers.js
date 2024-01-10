@@ -18,7 +18,7 @@ function generateMockUsers (count) {
       updatedAt: getRandomDate(2020, 2023), // Assuming a range of 2020 to 2023 for updatedAt
       email: faker.internet.email(),
       password: faker.internet.password(),
-      name: faker.person.firstName(),
+      firstName: faker.person.firstName(),
       birthDate: getRandomDate(1960, 2000), // Assuming a range of 1960 to 2000 for birthDate
       // Entries: faker.datatype.number({ min: 0, max: 100 }), // Random number of entries
       // LifeAspects: [faker.datatype.uuid(), faker.datatype.uuid()] // Assuming LifeAspects as an array of IDs
