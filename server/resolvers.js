@@ -1,4 +1,5 @@
 const { v1: uuid } = require('uuid');
+const User = require('./models/user');
 
 let users = [
   {
@@ -34,19 +35,13 @@ let users = [
 
 const resolvers = {
   Query: {
-    userCount: () => users.length,
-    getUserById: (root, args) => users.find(u => u._id === args.userId),
+    userCount: async () => await User.collection.countDocuments(),
+    getUserById: async (root, args) => await users.findById(args.userId),
   },
   Mutation: {
-    addUser: (root, args) => {
-      const newUser = {
-        ...args,
-        _id: uuid(),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      users = users.concat(newUser);
-      return newUser;
+    addUser: async (root, args) => {
+      const newUser = new User({ ...args });
+      return newUser.save();
     }
   }
 };

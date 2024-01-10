@@ -21,6 +21,7 @@ module.exports = `
       email: String!
       password: String!
       firstName: String!
+      birthDate: String!
     ): User
   }
 `
