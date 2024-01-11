@@ -23,6 +23,7 @@ beforeEach(async () => {
 afterAll(async () => {
   // Disconnect from the test database after all tests
   await mongoose.disconnect();
+  app.close();
 });
 
 describe('User Routes', () => {
@@ -95,7 +96,4 @@ describe('User Routes', () => {
     expect(response.body.lifeAspect.timePeriodStart).toBeUndefined();
     expect(response.body.lifeAspect.timePeriodEnd).toBeUndefined();
   });
-
-  // Add similar tests for 'should add a life aspect for a user', 'should add a relationship for a user',
-  // 'should delete an entry for a user', 'should delete a life aspect for a user', and 'should delete a relationship for a user'
 });

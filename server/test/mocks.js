@@ -13,6 +13,11 @@ const mocks = {
     title: 'My first entry',
     textBody: 'This is my first entry',
   },
+  entry2: {
+    textBody: 'This is my first entry. And I would like to talk about...',
+    visibility: 'friends',
+    journaledDate: '05-01-2024'
+  },
   aspect1: {
     title: 'Getting a new job',
     description: "I've been thinking a lot lately about getting a new job \n What should I do?",
