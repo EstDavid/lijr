@@ -7,7 +7,9 @@ const User = require('./models/user');
 
 require('dotenv').config();
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.NODE_ENV === 'TEST'
+  ? process.env.MONGODB_URI_TEST
+  : process.env.MONGODB_URI;
 
 console.log(`Connecting to MongoDB at ${MONGODB_URI}`);
 
