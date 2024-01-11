@@ -1,6 +1,6 @@
-const { v1: uuid } = require('uuid');
-const User = require('./models/user');
 const { GraphQLError } = require('graphql');
+const bcrypt = require('bcrypt');
+const User = require('./models/user');
 
 let users = [
   {
@@ -39,7 +39,12 @@ const resolvers = {
   },
   Mutation: {
     addUser: async (root, args) => {
-      const newUser = new User({ ...args });
+      const saltRounds = 10;
+      const passwordHash = await bcrypt.hash(args.password, saltRounds);
+
+      const newUser = new User({ ...args, password: passwordHash });
+
+
 
       try {
         await newUser.save();
