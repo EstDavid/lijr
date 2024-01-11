@@ -1,9 +1,9 @@
-const { ApolloServer } = require('@apollo/server');
-const { startStandaloneServer } = require('@apollo/server/standalone');
-const jwt = require('jsonwebtoken');
+const express = require('express');
+const cors = require('cors');
+const router = require('./router');
+
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const User = require('./models/user');
 
 require('dotenv').config();
 
@@ -21,25 +21,17 @@ mongoose.connect(MONGODB_URI)
     console.log(`Error in connection to MongoDB: ${error.message}`);
   });
 
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+const app = express();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+const PORT = 4001;
 
-startStandaloneServer(server, {
-  listen: { port: 4000 },
-  context: async ({ req, res }) => {
-    const auth = req ? req.headers.authorization : null;
-    if (auth && auth.startsWith('Bearer ')) {
-      const decodedToken = jwt.verify(auth.split('')[1], process.env.AUTH_SECRET);
-      const currentUser = await User.findById(decodedToken.id);
+app.use(express.static('build'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-      return { currentUser };
-    }
-  }
-}).then(({ url }) => {
-  console.log(`LIJR Server ready at ${url}`);
+app.use(router);
+
+app.listen(PORT, () => {
+  console.log(`LIJR Server ready at ${PORT}`);
 });
