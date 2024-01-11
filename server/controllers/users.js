@@ -1,13 +1,14 @@
-const express = require('express');
-const router = express.Router();
-
 const User = require('./models/user');
 const Entry = require('./models/entry');
 const { GenericAspect } = require('./models/aspects');
 const RelationshipAspect = require('./models/aspects/relationship');
 
-// Route to add a user
-router.post('/create', async (req, res) => {
+const User = require('../models/user');
+const Entry = require('../models/entry');
+const { GenericAspect } = require('../models/aspects');
+const RelationshipAspect = require('../models/aspects/relationship');
+
+async function createUser (req, res) {
   try {
     const { email, password, firstName, birthDate } = req.body;
     const user = new User({ email, password, firstName, birthDate });
@@ -16,10 +17,9 @@ router.post('/create', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to edit user details
-router.put('/edit/:id', async (req, res) => {
+async function editUser (req, res) {
   try {
     const id = req.params.id;
     const { firstName, birthDate } = req.body;
@@ -32,10 +32,9 @@ router.put('/edit/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to add an entry for a user
-router.post('/entry/:id', async (req, res) => {
+async function addEntry (req, res) {
   try {
     const id = req.params.id;
     const { entryData } = req.body;
@@ -50,10 +49,9 @@ router.post('/entry/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to add a life aspect for a user
-router.post('/aspect/:id', async (req, res) => {
+async function addAspect (req, res) {
   try {
     const id = req.params.id;
     const { aspectData } = req.body;
@@ -69,10 +67,9 @@ router.post('/aspect/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to add a relationship for a user
-router.post('/relationship/:id', async (req, res) => {
+async function addRelationship (req, res) {
   try {
     const id = req.params.id;
     const { aspectData } = req.body;
@@ -88,10 +85,9 @@ router.post('/relationship/:id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to delete an entry for a user
-router.delete('/entry/:id/:entryId', async (req, res) => {
+async function deleteEntry (req, res) {
   try {
     const { id, entryId } = req.params;
     await Entry.findByIdAndDelete(entryId);
@@ -104,10 +100,9 @@ router.delete('/entry/:id/:entryId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to delete a life aspect for a user
-router.delete('/aspect/:id/:aspectId', async (req, res) => {
+async function deleteAspect (req, res) {
   try {
     const { id, aspectId } = req.params;
     await GenericAspect.findByIdAndDelete(aspectId);
@@ -121,10 +116,9 @@ router.delete('/aspect/:id/:aspectId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-// Route to delete a life aspect for a user
-router.delete('/relationship/:id/:aspectId', async (req, res) => {
+async function deleteRelationship (req, res) {
   try {
     const { id, aspectId } = req.params;
     await RelationshipAspect.findByIdAndDelete(aspectId);
@@ -138,6 +132,15 @@ router.delete('/relationship/:id/:aspectId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+}
 
-module.exports = router;
+module.exports = {
+  createUser,
+  editUser,
+  addEntry,
+  addAspect,
+  addRelationship,
+  deleteEntry,
+  deleteAspect,
+  deleteRelationship
+};

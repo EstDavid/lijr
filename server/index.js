@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const router = require('./router');
+const usersRouter = require('./routers/users');
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
@@ -31,7 +31,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
-app.use(router);
+app.use('/api/users', usersRouter);
 
 app.listen(PORT, () => {
   console.log(`LIJR Server ready at ${PORT}`);
