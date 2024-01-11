@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "mock:users": "node utils/mockUsers.js"
   },
   "keywords": [],
@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
     "nodemon": "^3.0.2"
   }
 }
