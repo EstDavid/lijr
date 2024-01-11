@@ -59,27 +59,27 @@ const resolvers = {
       }
 
       return newUser;
+    },
+    login: async (root, args) => {
+      const user = await User.findOne({ email: args.email });
+
+      const passwordHash = await bcrypt.hash(args.password, saltRounds);
+
+      if (!user || user.password !== passwordHash) {
+        throw new GraphQLError('invalid email or password', {
+          extensions: {
+            code: 'BAD_USER_INPUT'
+          }
+        });
+      }
+
+      const userForToken = {
+        email: user.email,
+        id: user._id
+      };
+
+      return { value: jwt.sign(userForToken, process.env.AUTH_SECRET) };
     }
-  },
-  login: async (root, args) => {
-    const user = await User.findOne({ email: args.email });
-
-    const passwordHash = await bcrypt.hash(args.password, saltRounds);
-
-    if (!user || user.password !== passwordHash) {
-      throw new GraphQLError('invalid email or password', {
-        extensions: {
-          code: 'BAD_USER_INPUT'
-        }
-      });
-    }
-
-    const userForToken = {
-      email: user.email,
-      id: user._id
-    };
-
-    return { value: jwt.sign(userForToken, process.env.AUTH_SECRET) };
   }
 };
 

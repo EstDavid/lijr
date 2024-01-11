@@ -11,6 +11,10 @@ module.exports = `
     LifeAspects: [ID]
   }
 
+  type Token {
+    value: String!
+  }
+
   type Query {
     getUserById(userId: ID!): User
     userCount: Int!
@@ -23,5 +27,10 @@ module.exports = `
       firstName: String!
       birthDate: String!
     ): User
+
+    login (
+      email: String!
+      password: String!
+    ): Token
   }
 `
