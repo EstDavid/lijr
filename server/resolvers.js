@@ -1,5 +1,6 @@
 const { v1: uuid } = require('uuid');
 const User = require('./models/user');
+const { GraphQLError } = require('graphql');
 
 let users = [
   {
@@ -31,8 +32,6 @@ let users = [
   }
 ];
 
-// TODO: Add error handling as in https://fullstackopen.com/en/part8/graph_ql_server#error-handling
-
 const resolvers = {
   Query: {
     userCount: async () => await User.collection.countDocuments(),
@@ -41,7 +40,20 @@ const resolvers = {
   Mutation: {
     addUser: async (root, args) => {
       const newUser = new User({ ...args });
-      return newUser.save();
+
+      try {
+        await newUser.save();
+      } catch (error) {
+        throw new GraphQLError('Saving user failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args,
+            error
+          }
+        });
+      }
+
+      return newUser;
     }
   }
 };

@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
 
-const lifeAspectSchema = new mongoose.Schema({
-  genericLifeAspects: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'GenericLifeAspect',
-  },
-  relationships: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'RelationshipAspect',
-  }
-});
+const lifeAspectSchema = require('./lifeAspect');
 
 const journalEntrySchema = new mongoose.Schema({
   user: {
