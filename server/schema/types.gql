@@ -10,8 +10,8 @@ module.exports = `
     description: String
     type: String!
     journaledDate: String
-    score: Number
-    vibration: Number
+    score: Int
+    vibration: Int
   }
 
   type GenericLifeAspect {
@@ -54,7 +54,7 @@ module.exports = `
     title: String!
     textBody: String!
     visibility: Visibility
-    lifeAspects: 
+    lifeAspects: [LifeAspect]
     tags: [String]
   }
 
@@ -67,7 +67,7 @@ module.exports = `
     firstName: String!
     birthDate: String
     entries: [Entry]
-    lifeAspects: []
+    lifeAspects: [LifeAspect]
   }
 
   type Token {
