@@ -1,9 +1,22 @@
 const mocks = {
   user1: {
-    email: 'test@example.com',
+    email: 'john@example.com',
     password: 'password123',
-    firstName: "test",
-    birthDate: "01-01-2024"
+    firstName: 'John',
+    birthDate: '01-01-2024'
+  },
+  newData: {
+    firstName: 'Jane',
+    birthDate: '01-01-2022'
+  },
+  entry1: {
+    title: 'My first entry',
+    textBody: 'This is my first entry',
+  },
+  aspect1: {
+    title: 'Getting a new job',
+    description: "I've been thinking a lot lately about getting a new job \n What should I do?",
+    aspectType: 'Decisions',
   }
 };
 
