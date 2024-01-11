@@ -7,9 +7,6 @@ const EntrySchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  journaledDate: {
-    type: Date,
-  },
   title: {
     type: String,
     required: true
@@ -18,10 +15,13 @@ const EntrySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  journaledDate: {
+    type: Date,
+  },
   visibility: {
     type: String,
     enum: ['public', 'private', 'friends'], // Assuming limited visibility options
-    required: true
+    default: 'private'
   },
   lifeAspects: lifeAspectsPath,
   tags: {

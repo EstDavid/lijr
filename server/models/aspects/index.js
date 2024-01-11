@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
 const genericAspectSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  aspectType: {
+    type: String,
+    required: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -10,18 +22,6 @@ const genericAspectSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Entry'
   },
-  aspectType: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
   measurables: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Measurable'
@@ -29,7 +29,7 @@ const genericAspectSchema = new mongoose.Schema({
   visibility: {
     type: String,
     enum: ['public', 'private', 'friends'], // Assuming limited visibility options
-    required: true
+    default: 'private'
   },
   timePeriodStart: Date,
   timePeriodEnd: Date

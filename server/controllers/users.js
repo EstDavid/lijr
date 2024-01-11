@@ -32,8 +32,14 @@ async function editUser (req, res) {
 async function addEntry (req, res) {
   try {
     const id = req.params.id;
-    const { entryData } = req.body;
-    const entry = new Entry(entryData);
+    const { title, textBody, journaledDate, visibility } = req.body;
+    const entry = new Entry({
+      user: id,
+      title,
+      textBody,
+      journaledDate,
+      visibility
+    });
     await entry.save();
     const user = await User.findByIdAndUpdate(
       id,
@@ -49,13 +55,32 @@ async function addEntry (req, res) {
 async function addAspect (req, res) {
   try {
     const id = req.params.id;
-    const { aspectData } = req.body;
-    // TODO: Refactor aspectData
-    const lifeAspect = new GenericAspect(aspectData);
+
+    const {
+      title,
+      description,
+      aspectType,
+      visibility,
+      timePeriodStart,
+      timePeriodEnd
+    } = req.body;
+
+    console.log(req.body);
+
+    const lifeAspect = new GenericAspect({
+      user: id,
+      title,
+      description,
+      aspectType,
+      visibility,
+      timePeriodStart,
+      timePeriodEnd
+    });
+
     await lifeAspect.save();
     const user = await User.findByIdAndUpdate(
       id,
-      { $push: { lifeAspects: lifeAspect._id } },
+      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
       { new: true }
     );
     res.status(201).json({ lifeAspect, user });

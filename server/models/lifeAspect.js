@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const lifeAspectsPath = {
-  genericLifeAspects: {
+  genericAspects: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'GenericAspect',
   },
