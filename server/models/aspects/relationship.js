@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { genericLifeAspectSchema } = require('.');
+const { genericAspectSchema } = require('.');
 
 const relationshipAspectSchema = new mongoose.Schema({
   relationshipType: {
@@ -16,8 +16,8 @@ const relationshipAspectSchema = new mongoose.Schema({
   },
 });
 
-relationshipAspectSchema.add(genericLifeAspectSchema);
+relationshipAspectSchema.add(genericAspectSchema);
 
-const RelationshipAspectModel = mongoose.model('RelationshipAspect', relationshipAspectSchema);
+const RelationshipAspect = mongoose.model('RelationshipAspect', relationshipAspectSchema);
 
-module.exports = RelationshipAspectModel;
+module.exports = RelationshipAspect;

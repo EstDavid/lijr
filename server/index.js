@@ -23,12 +23,13 @@ mongoose.connect(MONGODB_URI)
 
 const app = express();
 
-const PORT = 4001;
+const PORT = 3001;
 
-app.use(express.static('build'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app
+  .use(cors())
+  .use(express.static('build'))
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }));
 
 app.use(router);
 

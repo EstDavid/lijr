@@ -33,6 +33,6 @@ const EntrySchema = new mongoose.Schema({
   { timestamps: true }
 );
 
-const EntryModel = mongoose.model('Entry', EntrySchema);
+const Entry = mongoose.model('Entry', EntrySchema);
 
-module.exports = EntryModel;
+module.exports = Entry;

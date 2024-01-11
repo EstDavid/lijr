@@ -31,6 +31,6 @@ const measurableSchema = new mongoose.Schema({
   { timestamps: true }
 );
 
-const MeasurableModel = mongoose.model('Measurable', measurableSchema);
+const Measurable = mongoose.model('Measurable', measurableSchema);
 
-module.exports = MeasurableModel;
+module.exports = Measurable;

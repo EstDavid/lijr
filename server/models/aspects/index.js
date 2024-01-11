@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const genericLifeAspectSchema = new mongoose.Schema({
+const genericAspectSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -37,9 +37,9 @@ const genericLifeAspectSchema = new mongoose.Schema({
   { timestamps: true }
 );
 
-const GenericLifeAspectModel = mongoose.model('GenericLifeAspect', genericLifeAspectSchema);
+const GenericAspect = mongoose.model('GenericAspect', genericAspectSchema);
 
 module.exports = {
-  GenericLifeAspectModel,
-  genericLifeAspectSchema
+  GenericAspect,
+  genericAspectSchema
 };
