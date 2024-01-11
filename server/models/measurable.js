@@ -27,8 +27,6 @@ const measurableSchema = new mongoose.Schema({
   },
   positiveNegative: Boolean,
   completed: Boolean,
-  timePeriodStart: Date,
-  timePeriodEnd: Date
 },
   { timestamps: true }
 );

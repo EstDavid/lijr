@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const lifeAspectSchema = require('./lifeAspect');
 
-const journalEntrySchema = new mongoose.Schema({
+const EntrySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -25,7 +25,7 @@ const journalEntrySchema = new mongoose.Schema({
     required: true
   },
   lifeAspects: lifeAspectSchema,
-  Tags: {
+  tags: {
     type: [String],
     default: []
   }
@@ -33,6 +33,6 @@ const journalEntrySchema = new mongoose.Schema({
   { timestamps: true }
 );
 
-const JournalEntryModel = mongoose.model('JournalEntry', journalEntrySchema);
+const EntryModel = mongoose.model('Entry', EntrySchema);
 
-module.exports = JournalEntryModel;
+module.exports = EntryModel;

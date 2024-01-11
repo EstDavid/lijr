@@ -13,7 +13,6 @@ const relationshipAspectSchema = new mongoose.Schema({
   userIdOfPerson: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: false
   },
 });
 

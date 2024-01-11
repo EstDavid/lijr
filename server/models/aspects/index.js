@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const genericLifeAspectSchema = new mongoose.Schema({
-  User: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  Entries: {
+  entries: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Entry'
   },
@@ -22,7 +22,7 @@ const genericLifeAspectSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  Measurables: {
+  measurables: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Measurable'
   },
@@ -30,7 +30,9 @@ const genericLifeAspectSchema = new mongoose.Schema({
     type: String,
     enum: ['public', 'private', 'friends'], // Assuming limited visibility options
     required: true
-  }
+  },
+  timePeriodStart: Date,
+  timePeriodEnd: Date
 },
   { timestamps: true }
 );

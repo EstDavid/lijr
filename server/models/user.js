@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   entries: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'JournalEntry',
+    ref: 'Entry',
   },
   lifeAspects: lifeAspectSchema,
 },
