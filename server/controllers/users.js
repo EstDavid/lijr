@@ -65,8 +65,6 @@ async function addAspect (req, res) {
       timePeriodEnd
     } = req.body;
 
-    console.log(req.body);
-
     const lifeAspect = new GenericAspect({
       user: id,
       title,
@@ -93,7 +91,7 @@ async function addRelationship (req, res) {
   try {
     const id = req.params.id;
     const { aspectData } = req.body;
-    // TODO: Refactor aspectData
+    // TODO: Refactor aspectData for addRelationship
     const lifeAspect = new RelationshipAspect(aspectData);
     await lifeAspect.save();
     const user = await User.findByIdAndUpdate(
