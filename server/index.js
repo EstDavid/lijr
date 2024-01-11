@@ -1,5 +1,6 @@
 const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 const User = require('./models/user');
@@ -28,6 +29,15 @@ const server = new ApolloServer({
 
 startStandaloneServer(server, {
   listen: { port: 4000 },
+  context: async ({ req, res }) => {
+    const auth = req ? req.headers.authorization : null;
+    if (auth && auth.startsWith('Bearer ')) {
+      const decodedToken = jwt.verify(auth.split('')[1], process.env.AUTH_SECRET);
+      const currentUser = await User.findById(decodedToken.id);
+
+      return { currentUser };
+    }
+  }
 }).then(({ url }) => {
   console.log(`LIJR Server ready at ${url}`);
 });
