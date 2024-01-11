@@ -35,3 +35,5 @@ app.use(router);
 app.listen(PORT, () => {
   console.log(`LIJR Server ready at ${PORT}`);
 });
+
+module.exports = app;
