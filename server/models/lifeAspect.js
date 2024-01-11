@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const lifeAspectSchema = new mongoose.Schema({
+const lifeAspectsPath = {
   genericLifeAspects: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'GenericAspect',
@@ -9,6 +9,6 @@ const lifeAspectSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'RelationshipAspect',
   }
-});
+};
 
-module.exports = lifeAspectSchema;
+module.exports = lifeAspectsPath;

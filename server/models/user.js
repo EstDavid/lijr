@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const lifeAspectSchema = require('./lifeAspect');
+const lifeAspectsPath = require('./lifeAspect');
 
 // email regex from https://www.slingacademy.com/article/how-to-validate-email-addresses-in-mongoose/
 const emailRegex = /^(([^<>()\[\]\.,;:\s@"]+(\.[^<>()\[\]\.,;:\s@"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Entry',
   },
-  lifeAspects: lifeAspectSchema,
+  lifeAspects: lifeAspectsPath,
 },
   { timestamps: true }
 );

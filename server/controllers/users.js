@@ -1,8 +1,3 @@
-const User = require('./models/user');
-const Entry = require('./models/entry');
-const { GenericAspect } = require('./models/aspects');
-const RelationshipAspect = require('./models/aspects/relationship');
-
 const User = require('../models/user');
 const Entry = require('../models/entry');
 const { GenericAspect } = require('../models/aspects');

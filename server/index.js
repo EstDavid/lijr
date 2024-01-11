@@ -27,7 +27,6 @@ const PORT = 3001;
 
 app
   .use(cors())
-  .use(express.static('build'))
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 

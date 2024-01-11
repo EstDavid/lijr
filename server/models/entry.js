@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-const lifeAspectSchema = require('./lifeAspect');
+const lifeAspectsPath = require('./lifeAspect');
 
 const EntrySchema = new mongoose.Schema({
   user: {
@@ -24,7 +23,7 @@ const EntrySchema = new mongoose.Schema({
     enum: ['public', 'private', 'friends'], // Assuming limited visibility options
     required: true
   },
-  lifeAspects: lifeAspectSchema,
+  lifeAspects: lifeAspectsPath,
   tags: {
     type: [String],
     default: []
