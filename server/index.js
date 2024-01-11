@@ -38,8 +38,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/entries', entriesRouter);
 app.use('/api/aspects', aspectsRouter);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`LIJR Server ready at ${PORT}`);
 });
 
-module.exports = app;
+module.exports = server;
