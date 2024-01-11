@@ -7,7 +7,7 @@ mongoose.set('strictQuery', false);
 
 require('dotenv').config();
 
-const MONGODB_URI = process.env.NODE_ENV === 'TEST'
+const MONGODB_URI = process.env.NODE_ENV === 'test'
   ? process.env.MONGODB_URI_TEST
   : process.env.MONGODB_URI;
 
@@ -23,7 +23,9 @@ mongoose.connect(MONGODB_URI)
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.NODE_ENV === 'test'
+  ? 3002
+  : 3001;
 
 app
   .use(cors())
