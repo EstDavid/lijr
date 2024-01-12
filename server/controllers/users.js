@@ -54,14 +54,18 @@ async function addEntry (req, res) {
 
 async function addEntryToAspect (req, res) {
   try {
-    const { id, aspectId } = req.params.id;
+    const { id, aspectId } = req.params;
+
     const { title, textBody, journaledDate, visibility } = req.body;
     const entry = new Entry({
       user: id,
       title,
       textBody,
       journaledDate,
-      visibility
+      visibility,
+      lifeAspects: {
+        genericAspects: [aspectId]
+      }
     });
     await entry.save();
     const user = await User.findByIdAndUpdate(
@@ -71,7 +75,7 @@ async function addEntryToAspect (req, res) {
     );
     const aspect = await GenericAspect.findByIdAndUpdate(
       aspectId,
-      { $push: { entries: entryId } },
+      { $push: { entries: entry._id } },
       { new: true }
     );
     res.status(201).json({ entry, user, aspect });
@@ -93,7 +97,7 @@ async function addAspect (req, res) {
       timePeriodEnd
     } = req.body;
 
-    const lifeAspect = new GenericAspect({
+    const aspect = new GenericAspect({
       user: id,
       title,
       description,
@@ -103,13 +107,13 @@ async function addAspect (req, res) {
       timePeriodEnd
     });
 
-    await lifeAspect.save();
+    await aspect.save();
     const user = await User.findByIdAndUpdate(
       id,
-      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
+      { $push: { 'lifeAspects.genericAspects': aspect._id } },
       { new: true }
     );
-    res.status(201).json({ lifeAspect, user });
+    res.status(201).json({ aspect, user });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -128,28 +132,29 @@ async function addAspectToEntry (req, res) {
       timePeriodEnd
     } = req.body;
 
-    const lifeAspect = new GenericAspect({
+    const aspect = new GenericAspect({
       user: id,
       title,
       description,
       aspectType,
       visibility,
       timePeriodStart,
-      timePeriodEnd
+      timePeriodEnd,
+      entries: [entryId]
     });
 
-    await lifeAspect.save();
+    await aspect.save();
     const user = await User.findByIdAndUpdate(
       id,
-      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
+      { $push: { 'lifeAspects.genericAspects': aspect._id } },
       { new: true }
     );
     const entry = await Entry.findByIdAndUpdate(
       entryId,
-      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
+      { $push: { 'lifeAspects.genericAspects': aspect._id } },
       { new: true }
     );
-    res.status(201).json({ lifeAspect, user, entry });
+    res.status(201).json({ aspect, user, entry });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
