@@ -6,11 +6,12 @@ const User = require('../models/user');
 const Entry = require('../models/entry');
 const { GenericAspect } = require('../models/aspects');
 const RelationshipAspect = require('../models/aspects/relationship');
-const { user1, entry1, entry2, aspect1 } = require('./mocks');
+const { user1, entry1, entry2, aspect1, aspect2 } = require('./mocks');
 
 const api = supertest(app);
 
-const entriesApiPath = '/api/entries';
+const usersApiPath = '/api/users';
+const aspectsApiPath = '/api/aspects';
 
 let user;
 let entry;
@@ -39,32 +40,32 @@ afterAll(async () => {
   app.close();
 });
 
-describe('Entry Routes', () => {
-  it('should edit an Entry', async () => {
+describe('Aspect Routes', () => {
+  it('should edit an aspect', async () => {
     const response = await api
-      .put(`${entriesApiPath}/edit/${entry._id}`)
-      .send(entry2);
+      .put(`${aspectsApiPath}/edit/${aspect._id}`)
+      .send(aspect2);
 
     expect(response.statusCode).toBe(201);
 
-    expect(response.body.entry.title).toEqual(entry1.title);
-    expect(response.body.entry.textBody).toEqual(entry2.textBody);
-    expect(response.body.entry.visibility).toEqual(entry2.visibility);
-    expect(response.body.entry.journaledDate).toBe((new Date(entry2.journaledDate).toISOString()));
+    expect(response.body.aspect.title).toEqual(aspect1.title);
+    expect(response.body.aspect.description).toEqual(aspect2.description);
+    expect(response.body.aspect.visibility).toEqual(aspect2.visibility);
+    expect(response.body.aspect.timePeriodStart).toEqual((new Date(aspect2.timePeriodStart).toISOString()));
   });
 
-  it('should add a life aspect to an entry and remove it', async () => {
+  it('should add an entry to a life aspect and remove it', async () => {
     const response1 = await api
-      .put(`${entriesApiPath}/aspect/add/${entry._id}/${aspect._id}`);
+      .put(`${aspectsApiPath}/entry/add/${aspect._id}/${entry._id}`);
 
     expect(response1.statusCode).toBe(201);
-    expect(response1.body.entry.lifeAspects.genericAspects.length).toBe(1);
-    expect(JSON.stringify(response1.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(aspect._id));
+    expect(response1.body.aspect.entries.length).toBe(1);
+    expect(JSON.stringify(response1.body.aspect.entries[0])).toEqual(JSON.stringify(entry._id));
 
     const response2 = await api
-      .put(`${entriesApiPath}/aspect/remove/${entry._id}/${aspect._id}`);
+      .put(`${aspectsApiPath}/entry/remove/${aspect._id}/${entry._id}`);
 
     expect(response2.statusCode).toBe(201);
-    expect(response2.body.entry.lifeAspects.genericAspects.length).toBe(0);
+    expect(response2.body.aspect.entries.length).toBe(0);
   });
 });

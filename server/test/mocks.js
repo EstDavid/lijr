@@ -28,6 +28,11 @@ const mocks = {
     title: 'Getting a new job',
     description: "I've been thinking a lot lately about getting a new job \n What should I do?",
     aspectType: 'Decisions',
+  },
+  aspect2: {
+    description: "I can't stop thinking about getting a new job",
+    timePeriodStart: '05-01-2024',
+    visibility: 'friends',
   }
 };
 
