@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const supertest = require('supertest');
+const bcrypt = require('bcrypt');
 const app = require('../index'); // Replace with the path to your Express app file
 
 const User = require('../models/user');
@@ -40,6 +41,17 @@ describe('User Routes', () => {
     expect(response.statusCode).toBe(201);
     expect(response.body.user).toHaveProperty('_id');
     expect(response.body.user.email).toBe(user2.email);
+  });
+
+  it('should hash user password', async () => {
+    const response = await api
+      .post(usersApiPath + '/create')
+      .send(user2);
+
+    expect(response.statusCode).toBe(201);
+
+    const passwordCheck = await bcrypt.compare(user2.password, response.body.user.password);
+    expect(passwordCheck).toBe(true);
   });
 
   it('should edit user details', async () => {
