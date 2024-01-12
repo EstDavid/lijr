@@ -6,11 +6,13 @@ const User = require('../models/user');
 const Entry = require('../models/entry');
 const { GenericAspect } = require('../models/aspects');
 const RelationshipAspect = require('../models/aspects/relationship');
-const { user1, newData, entry1, aspect1 } = require('./mocks');
+const { user1, newData, entry1, aspect1, user2 } = require('./mocks');
 
 const api = supertest(app);
 
 const usersApiPath = '/api/users';
+
+let user;
 
 beforeEach(async () => {
   // Clear the test database before each test
@@ -18,6 +20,10 @@ beforeEach(async () => {
   await Entry.deleteMany({});
   await GenericAspect.deleteMany({});
   await RelationshipAspect.deleteMany({});
+
+  user = new User(user1);
+  await user.save();
+
 });
 
 afterAll(async () => {
@@ -30,16 +36,14 @@ describe('User Routes', () => {
   it('should add a user', async () => {
     const response = await api
       .post(usersApiPath + '/create')
-      .send(user1);
+      .send(user2);
 
     expect(response.statusCode).toBe(201);
     expect(response.body.user).toHaveProperty('_id');
-    expect(response.body.user.email).toBe(user1.email);
+    expect(response.body.user.email).toBe(user2.email);
   });
 
   it('should edit user details', async () => {
-    const user = new User(user1);
-    await user.save();
     const { firstName, birthDate } = newData;
     const response = await api
       .put(`${usersApiPath}/edit/${user._id}`)
@@ -53,11 +57,10 @@ describe('User Routes', () => {
     expect(response.body.user.firstName).toBe(firstName);
     expect(response.body.user.birthDate).toBe((new Date(birthDate).toISOString()));
   });
+});
 
+describe('User entries and life aspects', () => {
   it('should add an entry for a user', async () => {
-    const user = new User(user1);
-    await user.save();
-
     const response = await api
       .post(`${usersApiPath}/entry/${user._id}`)
       .send(entry1);
@@ -75,9 +78,6 @@ describe('User Routes', () => {
   });
 
   it('should add a life aspect for a user', async () => {
-    const user = new User(user1);
-    await user.save();
-
     const response = await api
       .post(`${usersApiPath}/aspect/${user._id}`)
       .send(aspect1);
@@ -86,14 +86,56 @@ describe('User Routes', () => {
     expect(response.body.user).toHaveProperty('_id');
     expect(response.body.user.lifeAspects.genericAspects.length).toBe(1);
 
-    expect(response.body.lifeAspect).toHaveProperty('_id');
-    expect(JSON.stringify(response.body.lifeAspect.user)).toEqual(JSON.stringify(user._id));
-    expect(response.body.lifeAspect.title).toEqual(aspect1.title);
-    expect(response.body.lifeAspect.description).toEqual(aspect1.description);
-    expect(response.body.lifeAspect.aspectType).toEqual(aspect1.aspectType);
-    expect(response.body.lifeAspect.visibility).toEqual('private');
-    expect(response.body.lifeAspect.journaledDate).toBeUndefined();
-    expect(response.body.lifeAspect.timePeriodStart).toBeUndefined();
-    expect(response.body.lifeAspect.timePeriodEnd).toBeUndefined();
+    expect(response.body.aspect).toHaveProperty('_id');
+    expect(JSON.stringify(response.body.aspect.user)).toEqual(JSON.stringify(user._id));
+    expect(response.body.aspect.title).toEqual(aspect1.title);
+    expect(response.body.aspect.description).toEqual(aspect1.description);
+    expect(response.body.aspect.aspectType).toEqual(aspect1.aspectType);
+    expect(response.body.aspect.visibility).toEqual('private');
+    expect(response.body.aspect.journaledDate).toBeUndefined();
+    expect(response.body.aspect.timePeriodStart).toBeUndefined();
+    expect(response.body.aspect.timePeriodEnd).toBeUndefined();
+  });
+
+  it('should add an entry for a user and save it to an aspect', async () => {
+    const aspect = new GenericAspect({ ...aspect1, user: user._id });
+    await aspect.save();
+
+    const response = await api
+      .post(`${usersApiPath}/entry/${user._id}/${aspect._id}`)
+      .send(entry1);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.user.entries.length).toBe(1);
+    expect(response.body.aspect.entries.length).toBe(1);
+    expect(response.body.entry.lifeAspects.genericAspects.length).toBe(1);
+
+    expect(response.body.entry).toHaveProperty('_id');
+    expect(JSON.stringify(response.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(JSON.stringify(response.body.aspect.entries[0])).toEqual(JSON.stringify(response.body.entry._id));
+    expect(JSON.stringify(response.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(aspect._id));
+    expect(response.body.entry.title).toEqual(entry1.title);
+    expect(response.body.entry.textBody).toEqual(entry1.textBody);
+  });
+
+  it('should add a life aspect for a user and save it to an entry', async () => {
+    const entry = new Entry({ ...entry1, user: user._id });
+    await entry.save();
+
+    const response = await api
+      .post(`${usersApiPath}/aspect/${user._id}/${entry._id}`)
+      .send(aspect1);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.user.lifeAspects.genericAspects.length).toBe(1);
+    expect(response.body.aspect.entries.length).toBe(1);
+    expect(response.body.entry.lifeAspects.genericAspects.length).toBe(1);
+
+    expect(response.body.aspect).toHaveProperty('_id');
+    expect(JSON.stringify(response.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(JSON.stringify(response.body.aspect.entries[0])).toEqual(JSON.stringify(entry._id));
+    expect(JSON.stringify(response.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(response.body.aspect._id));
+    expect(response.body.aspect.description).toEqual(aspect1.description);
+    expect(response.body.aspect.aspectType).toEqual(aspect1.aspectType);
   });
 });

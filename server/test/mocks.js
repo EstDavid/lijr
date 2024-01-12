@@ -5,6 +5,12 @@ const mocks = {
     firstName: 'John',
     birthDate: '01-01-2024'
   },
+  user2: {
+    email: 'jane@example.com',
+    password: 'password123',
+    firstName: 'Jane',
+    birthDate: '01-01-2016'
+  },
   newData: {
     firstName: 'Jane',
     birthDate: '01-01-2022'

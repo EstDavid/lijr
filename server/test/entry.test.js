@@ -40,7 +40,7 @@ afterAll(async () => {
   app.close();
 });
 
-describe.only('Entry Routes', () => {
+describe('Entry Routes', () => {
   it('should edit an Entry', async () => {
     const response = await api
       .put(`${entriesApiPath}/edit/${entry._id}`)
