@@ -1,17 +1,23 @@
-// App component
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 const App = () => (
-  <>
-    <Homepage />
-    <Login />
-    <Signin />
-    <Dashboard />
-  </>
+  <Router>
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  </Router>
 );
 
 // Homepage component
 const Homepage = () => (
   <div id="homepage" className="container">
     Homepage
+    <Link to="/login">Login</Link>
+    <Link to="/signin">Sign In</Link>
+    <Link to="/dashboard">Dashboard</Link>
   </div>
 );
 
@@ -19,6 +25,7 @@ const Homepage = () => (
 const Login = () => (
   <div id="login" className="container">
     Login
+    <Link to="/">Home</Link>
   </div>
 );
 
@@ -26,30 +33,34 @@ const Login = () => (
 const Signin = () => (
   <div id="signin" className="container">
     Signin
+    <Link to="/">Home</Link>
   </div>
 );
 
 // Dashboard component
 const Dashboard = () => (
   <div>
-    <Layout />
-    <PanelDashboard type="entries" />
-    <PanelDashboard type="aspect" />
+    <DashboardHeader />
+    <div id="dashboard-body" className="flex-row">
+      <Sidebar />
+      <PanelDashboard type="entries" />
+    </div>
   </div>
 );
 
 // Layout component
 const Layout = () => (
-  <div id="layout" className="container">
+  <div id="layout" className="">
     <Header />
     <Sidebar />
   </div>
 );
 
 // Header component
-const Header = () => (
-  <div id="header" className="container">
+const DashboardHeader = () => (
+  <div id="dashboard-header" className="container">
     Header
+    <Link to="/">Sign Out</Link>
   </div>
 );
 
@@ -85,7 +96,7 @@ const VibrationBar = () => (
 
 // PanelDashboard component
 const PanelDashboard = ({ type }) => (
-  <div className={`panel-dashboard container ${type}`}>
+  <div id="panel-dashboard" className={`container ${type}`}>
     <PanelHeader type={type} />
     <EntriesPanel type={type} />
   </div>
@@ -127,15 +138,46 @@ const AspectForm = () => (
 
 // NewEntryPanel component
 const NewEntryPanel = () => (
-  <div className="new-entry-panel" className="container">
+  <div className="new-entry-panel container">
     {/* Your NewEntryPanel component code here */}
   </div>
 );
 
 // EntriesPanel component
 const EntriesPanel = ({ type }) => (
-  <div className={`entries-panel container ${type}`}>
-    {[<Entry key="1" />, <Entry key="2" />, <Entry key="3" />]}
+  <div id="entries-panel" className={`container ${type}`}>
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
+    <Entry />
   </div>
 );
 
