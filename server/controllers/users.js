@@ -182,11 +182,19 @@ async function deleteEntry (req, res) {
   try {
     const { id, entryId } = req.params;
     await Entry.findByIdAndDelete(entryId);
+
     const user = await User.findByIdAndUpdate(
       id,
       { $pull: { entries: entryId } },
       { new: true }
     );
+
+    await GenericAspect.updateMany(
+      {},
+      { $pull: { entries: entryId } },
+      { new: true }
+    );
+
     res.json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -197,12 +205,19 @@ async function deleteAspect (req, res) {
   try {
     const { id, aspectId } = req.params;
     await GenericAspect.findByIdAndDelete(aspectId);
-    // TODO: Delete aspect from all entries
+
     const user = await User.findByIdAndUpdate(
       id,
-      { $pull: { lifeAspects: aspectId } },
+      { $pull: { 'lifeAspects.genericAspects': aspectId } },
       { new: true }
     );
+
+    await Entry.updateMany(
+      {},
+      { $pull: { 'lifeAspects.genericAspects': aspectId } },
+      { new: true }
+    );
+
     res.json({ user });
   } catch (error) {
     res.status(500).json({ error: error.message });

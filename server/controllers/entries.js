@@ -18,8 +18,7 @@ async function editEntry (req, res) {
 
 async function addAspectToEntry (req, res) {
   try {
-    const id = req.params.id;
-    const aspectId = req.params.aspectId;
+    const { id, aspectId } = req.params;
 
     const updatedEntry = await Entry.findByIdAndUpdate(
       id,
@@ -34,8 +33,7 @@ async function addAspectToEntry (req, res) {
 
 async function removeAspectFromEntry (req, res) {
   try {
-    const id = req.params.id;
-    const aspectId = req.params.aspectId;
+    const { id, aspectId } = req.params;
 
     const updatedEntry = await Entry.findByIdAndUpdate(
       id,
