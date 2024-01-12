@@ -52,6 +52,34 @@ async function addEntry (req, res) {
   }
 }
 
+async function addEntryToAspect (req, res) {
+  try {
+    const { id, aspectId } = req.params.id;
+    const { title, textBody, journaledDate, visibility } = req.body;
+    const entry = new Entry({
+      user: id,
+      title,
+      textBody,
+      journaledDate,
+      visibility
+    });
+    await entry.save();
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $push: { entries: entry._id } },
+      { new: true }
+    );
+    const aspect = await GenericAspect.findByIdAndUpdate(
+      aspectId,
+      { $push: { entries: entryId } },
+      { new: true }
+    );
+    res.status(201).json({ entry, user, aspect });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function addAspect (req, res) {
   try {
     const id = req.params.id;
@@ -82,6 +110,46 @@ async function addAspect (req, res) {
       { new: true }
     );
     res.status(201).json({ lifeAspect, user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+async function addAspectToEntry (req, res) {
+  try {
+    const { id, entryId } = req.params;
+
+    const {
+      title,
+      description,
+      aspectType,
+      visibility,
+      timePeriodStart,
+      timePeriodEnd
+    } = req.body;
+
+    const lifeAspect = new GenericAspect({
+      user: id,
+      title,
+      description,
+      aspectType,
+      visibility,
+      timePeriodStart,
+      timePeriodEnd
+    });
+
+    await lifeAspect.save();
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
+      { new: true }
+    );
+    const entry = await Entry.findByIdAndUpdate(
+      entryId,
+      { $push: { 'lifeAspects.genericAspects': lifeAspect._id } },
+      { new: true }
+    );
+    res.status(201).json({ lifeAspect, user, entry });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -156,7 +224,9 @@ module.exports = {
   createUser,
   editUser,
   addEntry,
+  addEntryToAspect,
   addAspect,
+  addAspectToEntry,
   addRelationship,
   deleteEntry,
   deleteAspect,
