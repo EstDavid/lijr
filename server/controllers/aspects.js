@@ -26,7 +26,7 @@ async function editAspect (req, res) {
       },
       { new: true }
     );
-    res.status(201).json({ entry: updatedAspect });
+    res.status(201).json({ aspect: updatedAspect });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -34,15 +34,14 @@ async function editAspect (req, res) {
 
 async function addEntryToAspect (req, res) {
   try {
-    const id = req.params.id;
-    const entryId = req.params.entryId;
+    const { id, entryId } = req.params;
 
     const updatedAspect = await GenericAspect.findByIdAndUpdate(
       id,
       { $push: { entries: entryId } },
       { new: true }
     );
-    res.status(201).json({ entries: updatedAspect });
+    res.status(201).json({ aspect: updatedAspect });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -50,15 +49,14 @@ async function addEntryToAspect (req, res) {
 
 async function removeEntryFromAspect (req, res) {
   try {
-    const id = req.params.id;
-    const entryId = req.params.entryId;
+    const { id, entryId } = req.params;
 
     const updatedAspect = await GenericAspect.findByIdAndUpdate(
       id,
       { $pull: { entries: entryId } },
       { new: true }
     );
-    res.status(201).json({ entry: updatedAspect });
+    res.status(201).json({ aspect: updatedAspect });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

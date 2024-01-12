@@ -9,8 +9,8 @@ const {
 
 router.put('/edit/:id', editAspect);
 
-router.put('/aspect/add/:id/:aspectId', addEntryToAspect);
+router.put('/entry/add/:id/:entryId', addEntryToAspect);
 
-router.put('/aspect/remove/:id/:aspectId', removeEntryFromAspect);
+router.put('/entry/remove/:id/:entryId', removeEntryFromAspect);
 
 module.exports = router;
