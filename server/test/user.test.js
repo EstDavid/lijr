@@ -23,7 +23,6 @@ beforeEach(async () => {
 
   user = new User(user1);
   await user.save();
-
 });
 
 afterAll(async () => {
@@ -137,5 +136,59 @@ describe('User entries and life aspects', () => {
     expect(JSON.stringify(response.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(response.body.aspect._id));
     expect(response.body.aspect.description).toEqual(aspect1.description);
     expect(response.body.aspect.aspectType).toEqual(aspect1.aspectType);
+  });
+
+  it('should delete an entry for a user and remove it from the aspects linking to it', async () => {
+    const aspect = new GenericAspect({ ...aspect1, user: user._id });
+    await aspect.save();
+
+    const response1 = await api
+      .post(`${usersApiPath}/entry/${user._id}/${aspect._id}`)
+      .send(entry1);
+
+    expect(response1.statusCode).toBe(201);
+    expect(response1.body.user.entries.length).toBe(1);
+    expect(response1.body.aspect.entries.length).toBe(1);
+    expect(response1.body.entry.lifeAspects.genericAspects.length).toBe(1);
+
+    expect(JSON.stringify(response1.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(JSON.stringify(response1.body.aspect.entries[0])).toEqual(JSON.stringify(response1.body.entry._id));
+    expect(JSON.stringify(response1.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(aspect._id));
+
+    const response2 = await api
+      .delete(`${usersApiPath}/entry/${user._id}/${response1.body.entry._id}`);
+
+    const updatedAspect = await GenericAspect.findById(aspect._id);
+
+    expect(response2.statusCode).toBe(200);
+    expect(response2.body.user.entries.length).toBe(0);
+    expect(updatedAspect.entries.length).toBe(0);
+  });
+
+  it('should delete an aspect for a user and remove it from the entries linking to it', async () => {
+    const entry = new Entry({ ...entry1, user: user._id });
+    await entry.save();
+
+    const response1 = await api
+      .post(`${usersApiPath}/aspect/${user._id}/${entry._id}`)
+      .send(aspect1);
+
+    expect(response1.statusCode).toBe(201);
+    expect(response1.body.user.lifeAspects.genericAspects.length).toBe(1);
+    expect(response1.body.entry.lifeAspects.genericAspects.length).toBe(1);
+    expect(response1.body.aspect.entries.length).toBe(1);
+
+    expect(JSON.stringify(response1.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(JSON.stringify(response1.body.aspect.entries[0])).toEqual(JSON.stringify(entry._id));
+    expect(JSON.stringify(response1.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(response1.body.aspect._id));
+
+    const response2 = await api
+      .delete(`${usersApiPath}/aspect/${user._id}/${response1.body.aspect._id}`);
+
+    const updatedEntry = await Entry.findById(entry._id);
+
+    expect(response2.statusCode).toBe(200);
+    expect(response2.body.user.lifeAspects.genericAspects.length).toBe(0);
+    expect(updatedEntry.lifeAspects.genericAspects.length).toBe(0);
   });
 });
