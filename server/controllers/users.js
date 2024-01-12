@@ -1,15 +1,21 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Entry = require('../models/entry');
 const { GenericAspect } = require('../models/aspects');
 const RelationshipAspect = require('../models/aspects/relationship');
 
+const saltRounds = 10;
+
 async function createUser (req, res) {
   try {
     const { email, password, firstName, birthDate } = req.body;
-    const user = new User({ email, password, firstName, birthDate });
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const user = new User({ email, password: hashedPassword, firstName, birthDate });
     await user.save();
     res.status(201).json({ user });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 }
