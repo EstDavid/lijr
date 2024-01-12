@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { JournalContext } from './JournalContext.jsx';
 
 const App = () => (
   <Router>
@@ -57,12 +59,17 @@ const Layout = () => (
 );
 
 // Header component
-const DashboardHeader = () => (
-  <div id="dashboard-header" className="container">
-    Header
-    <Link to="/">Sign Out</Link>
-  </div>
-);
+const DashboardHeader = () => {
+  const { state, changeTheme } = useContext(JournalContext);
+
+  return (
+    <div id="dashboard-header" className="container">
+      Header {state.uiState.theme}
+      <Link to="/">Sign Out</Link>
+      <button onClick={() => changeTheme('es')}>Change Theme</button>
+    </div>
+  );
+};
 
 // Sidebar component
 const Sidebar = () => (

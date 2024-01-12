@@ -42,7 +42,7 @@ body {
   height: var(--height-dashboard-header);
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: #575757;
   overflow: hidden;
 }
 
