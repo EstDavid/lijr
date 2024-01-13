@@ -1,5 +1,5 @@
 const login = (dispatch, user) => {
-  dispatch({ type: 'LOGIN', payload: user });
+  dispatch({ type: 'SET_USER', payload: user });
 };
 
 const setError = (dispatch, error) => {

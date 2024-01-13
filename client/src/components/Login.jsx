@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '@/context/contexts/UserContext';
 import userService from '@/services/user';
 import entriesService from '@/services/entries';
 
 const Login = () => {
+  const { dispatch, login } = useContext(UserContext);
+
   const handleLogin = async () => {
     // event.preventDefault()
     try {
-      const user = await userService.login({
+      const userResponse = await userService.login({
         email: 'john@examples.com',
         password: 'password123',
       });
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+      window.localStorage.setItem('loggedUser', JSON.stringify(userResponse));
 
-      userService.setToken(user.token);
-      entriesService.setToken(user.token);
+      login(dispatch, userResponse.user);
+
+      userService.setToken(userResponse.token);
+      entriesService.setToken(userResponse.token);
     } catch (error) {
       console.error(error);
     }

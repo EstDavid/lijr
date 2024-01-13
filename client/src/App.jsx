@@ -1,10 +1,29 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Homepage from './components/Homepage.jsx';
-import Login from './components/Login.jsx';
-import Signup from './components/Signup.jsx';
-import Dashboard from './components/Dashboard.jsx';
+import { useContext } from 'react';
+import { UserContext } from '@/context/contexts/UserContext';
+import userService from '@/services/user';
+import entriesService from '@/services/entries';
+
+import Homepage from './components/Homepage';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
+  const { dispatch, login } = useContext(UserContext);
+  useEffect(() => {
+    const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
+
+    if (loggedUser) {
+      login(dispatch, loggedUser.user);
+
+      userService.setToken(loggedUser.token);
+      entriesService.setToken(loggedUser.token);
+
+      entriesService.getAll().then((entries) => console.log(entries));
+    }
+  }, []);
   return (
     <Router>
       <Routes>

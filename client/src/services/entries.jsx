@@ -6,8 +6,8 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getAll = async (userId) => {
-  const response = await fetch(`${baseUrl}/${userId}`, {
+const getAll = async () => {
+  const response = await fetch(baseUrl, {
     headers: { Authorization: token },
   });
 
