@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/auth');
 const {
   getEntries,
   addEntry,
+  addEntryAndAddToAspect,
   editEntry,
   addAspectToEntry,
   removeAspectFromEntry,
@@ -14,6 +15,8 @@ const {
 router.get('/', authMiddleware, getEntries);
 
 router.post('/create', authMiddleware, addEntry);
+
+router.post('/create/:aspectId', authMiddleware, addEntryAndAddToAspect);
 
 router.put('/:entryId', authMiddleware, editEntry);
 

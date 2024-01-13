@@ -38,6 +38,40 @@ async function addEntry (req, res) {
   }
 }
 
+async function addEntryAndAddToAspect (req, res) {
+  try {
+    const { _id } = req.user;
+    const { aspectId } = req.params;
+    const { title, textBody, journaledDate, visibility } = req.body;
+    const entry = new Entry({
+      user: _id,
+      title,
+      textBody,
+      journaledDate,
+      visibility,
+      lifeAspects: {
+        genericAspects: [aspectId]
+      }
+    });
+    await entry.save();
+    const user = await User.findByIdAndUpdate(
+      _id,
+      { $push: { entries: entry._id } },
+      { new: true }
+    );
+
+    const aspect = await GenericAspect.findOneAndUpdate(
+      { _id: aspectId, user: _id },
+      { $push: { entries: entry._id } },
+      { new: true }
+    );
+
+    res.status(201).json({ entry, user, aspect });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function editEntry (req, res) {
   try {
     const { _id } = req.user;
@@ -115,6 +149,7 @@ async function deleteEntry (req, res) {
 module.exports = {
   getEntries,
   addEntry,
+  addEntryAndAddToAspect,
   editEntry,
   addAspectToEntry,
   removeAspectFromEntry,

@@ -62,73 +62,6 @@ async function editUser (req, res) {
   }
 }
 
-async function addEntryToAspect (req, res) {
-  try {
-    const { id, aspectId } = req.params;
-
-    const { title, textBody, journaledDate, visibility } = req.body;
-    const entry = new Entry({
-      user: id,
-      title,
-      textBody,
-      journaledDate,
-      visibility,
-      lifeAspects: {
-        genericAspects: [aspectId]
-      }
-    });
-    await entry.save();
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $push: { entries: entry._id } },
-      { new: true }
-    );
-    const aspect = await GenericAspect.findByIdAndUpdate(
-      aspectId,
-      { $push: { entries: entry._id } },
-      { new: true }
-    );
-    res.status(201).json({ entry, user, aspect });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-async function addAspect (req, res) {
-  try {
-    const id = req.params.id;
-
-    const {
-      title,
-      description,
-      aspectType,
-      visibility,
-      timePeriodStart,
-      timePeriodEnd
-    } = req.body;
-
-    const aspect = new GenericAspect({
-      user: id,
-      title,
-      description,
-      aspectType,
-      visibility,
-      timePeriodStart,
-      timePeriodEnd
-    });
-
-    await aspect.save();
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $push: { 'lifeAspects.genericAspects': aspect._id } },
-      { new: true }
-    );
-    res.status(201).json({ aspect, user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 async function addAspectToEntry (req, res) {
   try {
     const { id, entryId } = req.params;
@@ -170,71 +103,9 @@ async function addAspectToEntry (req, res) {
   }
 }
 
-async function addRelationship (req, res) {
-  try {
-    const id = req.params.id;
-    const { aspectData } = req.body;
-    // TODO: Refactor aspectData for addRelationship
-    const lifeAspect = new RelationshipAspect(aspectData);
-    await lifeAspect.save();
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $push: { lifeAspects: lifeAspect._id } },
-      { new: true }
-    );
-    res.status(201).json({ lifeAspect, user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-async function deleteAspect (req, res) {
-  try {
-    const { id, aspectId } = req.params;
-    await GenericAspect.findByIdAndDelete(aspectId);
-
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $pull: { 'lifeAspects.genericAspects': aspectId } },
-      { new: true }
-    );
-
-    await Entry.updateMany(
-      {},
-      { $pull: { 'lifeAspects.genericAspects': aspectId } },
-      { new: true }
-    );
-
-    res.json({ user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
-async function deleteRelationship (req, res) {
-  try {
-    const { id, aspectId } = req.params;
-    await RelationshipAspect.findByIdAndDelete(aspectId);
-    // TODO: Delete aspect from all entries
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $pull: { lifeAspects: aspectId } },
-      { new: true }
-    );
-    res.json({ user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 module.exports = {
   create,
   login,
   editUser,
-  addEntryToAspect,
-  addAspect,
   addAspectToEntry,
-  addRelationship,
-  deleteAspect,
-  deleteRelationship
 };

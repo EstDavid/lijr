@@ -1,19 +1,29 @@
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../middlewares/auth');
 
 const {
   getAspects,
+  addAspect,
+  addAspectAndAddToEntry,
   editAspect,
   addEntryToAspect,
-  removeEntryFromAspect
+  removeEntryFromAspect,
+  deleteAspect
 } = require('../controllers/aspects');
 
-router.get('/:userId', getAspects);
+router.get('/', authMiddleware, getAspects);
 
-router.put('/edit/:id', editAspect);
+router.post('/create', authMiddleware, addAspect);
 
-router.put('/entry/add/:id/:entryId', addEntryToAspect);
+router.post('/create/:entryId', authMiddleware, addAspectAndAddToEntry);
 
-router.put('/entry/remove/:id/:entryId', removeEntryFromAspect);
+router.put('/:aspectId', authMiddleware, editAspect);
+
+router.put('/add/entry/:aspectId/:entryId', authMiddleware, addEntryToAspect);
+
+router.put('/remove/entry/:aspectId/:entryId', authMiddleware, removeEntryFromAspect);
+
+router.delete('/:aspectId', authMiddleware, deleteAspect);
 
 module.exports = router;
