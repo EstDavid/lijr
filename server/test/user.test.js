@@ -47,10 +47,14 @@ describe('User Routes', () => {
 
     expect(response.statusCode).toBe(201);
 
-    const token = response.body.token;
+    const { token, user } = response.body;
+
     const decoded = jwt.verify(token, process.env.AUTH_SECRET);
     expect(decoded).toHaveProperty('_id');
 
+    expect(user).toHaveProperty('_id');
+    expect(user.email).toBe(user2.email);
+    expect(user.firstName).toBe(user2.firstName);
   });
 
   it('should hash user password', async () => {
@@ -76,11 +80,16 @@ describe('User Routes', () => {
 
     expect(response.statusCode).toBe(201);
 
-    const token = response.body.token;
+    const { token, user } = response.body;
+
     const decoded = jwt.verify(token, process.env.AUTH_SECRET);
 
     const savedUser = await User.findById(decoded._id);
     expect(decoded._id).toEqual(savedUser._id.toString());
+
+    expect(user).toHaveProperty('_id');
+    expect(user.email).toBe(user2.email);
+    expect(user.firstName).toBe(user2.firstName);
   });
 
   it('should edit user details', async () => {
