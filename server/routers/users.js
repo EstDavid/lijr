@@ -15,6 +15,6 @@ router.post('/create', create);
 router.post('/login', login);
 
 // Route to edit user details
-router.put('/edit/', authMiddleware, editUser);
+router.put('/edit', authMiddleware, editUser);
 
 module.exports = router;
