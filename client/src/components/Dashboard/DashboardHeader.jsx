@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { UiContext } from './context/contexts/UiContext';
+import { UiContext } from '@/context/contexts/UiContext';
 
 // Header component
 const DashboardHeader = () => {

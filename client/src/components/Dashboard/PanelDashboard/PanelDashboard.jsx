@@ -1,4 +1,5 @@
-import { PanelHeader, EntriesPanel } from './App.jsx';
+import PanelHeader from './PanelHeader/PanelHeader';
+import EntriesPanel from './EntriesPanel/EntriesPanel';
 
 // PanelDashboard component
 const PanelDashboard = ({ type }) => (

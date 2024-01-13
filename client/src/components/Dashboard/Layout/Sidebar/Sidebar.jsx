@@ -1,4 +1,6 @@
-import { Categories, Timeline, VibrationBar } from './App.jsx';
+import Categories from './Categories';
+import Timeline from './Timeline';
+import VibrationBar from './VibrationBar';
 
 // Sidebar component
 const Sidebar = () => (

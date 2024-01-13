@@ -1,4 +1,5 @@
-import { Stats, AspectForm } from './App.jsx';
+import Stats from './Stats';
+import AspectForm from './AspectForm';
 
 // AspectControls component
 const AspectControls = () => (

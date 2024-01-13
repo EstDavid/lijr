@@ -1,4 +1,4 @@
-import { Entry } from './App.jsx';
+import Entry from './Entry';
 
 // EntriesPanel component
 const EntriesPanel = ({ type }) => (

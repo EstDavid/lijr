@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import userService from './services/user';
-import entriesService from './services/entries';
+import userService from '@/services/user';
+import entriesService from '@/services/entries';
 
 const Login = () => {
   const handleLogin = async () => {

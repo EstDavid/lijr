@@ -1,4 +1,6 @@
-import { PanelTitle, AspectControls, NewEntryPanel } from './App.jsx';
+import PanelTitle from './PanelTitle';
+import AspectControls from './AspectControls';
+import NewEntryPanel from './NewEntryPanel';
 
 // PanelHeader component
 const PanelHeader = ({ type }) => (
