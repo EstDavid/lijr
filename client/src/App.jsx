@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { UiContext } from './context/contexts/UiContext';
 import Homepage from './components/Homepage.jsx';
+import userService from './services/user';
 import entriesService from './services/entries';
 
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
@@ -23,20 +24,58 @@ const App = () => {
 };
 
 // Login component
-const Login = () => (
-  <div id="login" className="container">
-    Login
-    <Link to="/">Home</Link>
-  </div>
-);
+const Login = () => {
+  const handleLogin = async () => {
+    // event.preventDefault()
+    try {
+      const user = await userService.login({
+        email: 'john@examples.com',
+        password: 'password123',
+      });
 
-// Signin component
-const Signin = () => (
-  <div id="signin" className="container">
-    Signin
-    <Link to="/">Home</Link>
-  </div>
-);
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+
+      userService.setToken(user.token);
+      entriesService.setToken(user.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <div id="login" className="container">
+      <button onClick={handleLogin}>Login</button>
+      <Link to="/">Home</Link>
+    </div>
+  );
+};
+
+// Signup component
+const Signup = () => {
+  const handleSignup = async () => {
+    // event.preventDefault()
+    try {
+      const user = await userService.signup({
+        email: 'john@examples.com',
+        password: 'password123',
+        firstName: 'John',
+      });
+
+      window.localStorage.setItem('loggedUser', JSON.stringify(user));
+
+      userService.setToken(user.token);
+      entriesService.setToken(user.token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div id="signup" className="container">
+      <button onClick={handleSignup}>Signup</button>
+      <Link to="/">Home</Link>
+    </div>
+  );
+};
 
 // Dashboard component
 const Dashboard = () => (
