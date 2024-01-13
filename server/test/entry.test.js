@@ -99,6 +99,25 @@ describe('Entry Routes', () => {
     expect(response.body.entry.journaledDate).toBe((new Date(entry2.journaledDate).toISOString()));
   });
 
+  it('should add an entry for a user and save it to an aspect', async () => {
+    const response = await api
+      .post(`${entriesApiPath}/create/${aspect._id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(entry1);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.user.entries.length).toBe(1);
+    expect(response.body.aspect.entries.length).toBe(1);
+    expect(response.body.entry.lifeAspects.genericAspects.length).toBe(1);
+
+    expect(response.body.entry).toHaveProperty('_id');
+    expect(JSON.stringify(response.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(JSON.stringify(response.body.aspect.entries[0])).toEqual(JSON.stringify(response.body.entry._id));
+    expect(JSON.stringify(response.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(aspect._id));
+    expect(response.body.entry.title).toEqual(entry1.title);
+    expect(response.body.entry.textBody).toEqual(entry1.textBody);
+  });
+
   it('should add a life aspect to an entry and remove it', async () => {
     const response1 = await api
       .put(`${entriesApiPath}/add/aspect/${entry._id}/${aspect._id}`)
