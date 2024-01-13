@@ -15,6 +15,7 @@ const api = supertest(app);
 const usersApiPath = '/api/users';
 
 let user;
+let token;
 
 beforeEach(async () => {
   // Clear the test database before each test
@@ -23,8 +24,13 @@ beforeEach(async () => {
   await GenericAspect.deleteMany({});
   await RelationshipAspect.deleteMany({});
 
-  user = new User(user1);
-  await user.save();
+  const response = await api
+    .post(`${usersApiPath}/create`)
+    .send(user1);
+
+  token = response.body.token;
+
+  user = await User.findOne();
 });
 
 afterAll(async () => {
@@ -80,7 +86,8 @@ describe('User Routes', () => {
   it('should edit user details', async () => {
     const { firstName, birthDate } = newData;
     const response = await api
-      .put(`${usersApiPath}/edit/${user._id}`)
+      .put(`${usersApiPath}/edit`)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         firstName,
         birthDate
