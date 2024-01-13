@@ -1,18 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { UiContext } from './context/contexts/UiContext';
 import Homepage from './components/Homepage.jsx';
+import entriesService from './services/entries';
 
-const App = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-    </Routes>
-  </Router>
-);
+const App = () => {
+  useEffect(() => {
+    entriesService
+      .getAll('65a2510c83350af0643d9ce0')
+      .then((entries) => console.log(entries));
+  }, []);
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
+  );
+};
 
 // Login component
 const Login = () => (
