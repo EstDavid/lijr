@@ -25,7 +25,7 @@ async function create (req, res) {
 
     await newUser.save();
     const token = jwt.sign({ _id: newUser._id }, AUTH_SECRET);
-    res.status(201).json({ token });
+    res.status(201).json({ token, user: newUser });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
@@ -39,7 +39,7 @@ const login = async (req, res) => {
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
     const token = jwt.sign({ _id: user._id }, AUTH_SECRET);
-    res.status(200).send({ token });
+    res.status(200).send({ token, user });
   } catch (error) {
     res
       .status(401)
