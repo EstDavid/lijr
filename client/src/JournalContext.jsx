@@ -3,47 +3,62 @@ import { createContext, useReducer } from 'react';
 export const JournalContext = createContext();
 
 const initialState = {
-  uiState: {
+  ui: {
     theme: 'dark',
-    language: 'en'
+    language: 'en',
   },
   user: {
     loggedIn: false,
-    id: ''
+    id: '',
   },
   journalData: {
-    entries: []
-  }
+    entries: [],
+  },
 };
 
-function reducer (state, action) {
+function themeReducer(state, action) {
   switch (action.type) {
-    case 'LOGIN':
-      return {
-        state, user: { ...state.user, loggedIn: true, id: action.user.id }
-      };
     case 'CHANGE_THEME':
       return {
-        state, uiState: { ...state.uiState, theme: action.theme }
+        ...state,
+        theme: action.theme,
       };
     default:
       return state;
   }
 }
 
-function JournalProvider (props) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+function userReducer(state, action) {
+  switch (action.type) {
+    case 'LOGIN':
+      return {
+        ...state,
+        loggedIn: true,
+        id: action.user.id,
+      };
+    default:
+      return state;
+  }
+}
 
-  const login = (user) => {
-    dispatch({ type: 'LOGIN', user });
+function JournalProvider(props) {
+  const [ui, dispatch] = useReducer(themeReducer, initialState.ui);
+  const [user] = useReducer(userReducer, initialState.user);
+
+  const userActions = {
+    login: (user) => {
+      dispatch({ type: 'LOGIN', user });
+    },
   };
 
-  const changeTheme = (theme) => {
-    dispatch({ type: 'CHANGE_THEME', theme });
+  const themeActions = {
+    changeTheme: (theme) => {
+      dispatch({ type: 'CHANGE_THEME', theme });
+    },
   };
 
   return (
-    <JournalContext.Provider value={{ state, login, changeTheme }}>
+    <JournalContext.Provider value={{ user, ui, userActions, themeActions }}>
       {props.children}
     </JournalContext.Provider>
   );

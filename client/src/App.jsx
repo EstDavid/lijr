@@ -50,21 +50,15 @@ const Dashboard = () => (
   </div>
 );
 
-// Layout component
-const Layout = () => (
-  <div id="layout" className="">
-    <Header />
-    <Sidebar />
-  </div>
-);
-
 // Header component
 const DashboardHeader = () => {
-  const { state, changeTheme } = useContext(JournalContext);
+  const { ui, themeActions } = useContext(JournalContext);
+
+  const { changeTheme } = themeActions;
 
   return (
     <div id="dashboard-header" className="container">
-      Header {state.uiState.theme}
+      Header {ui.theme}
       <Link to="/">Sign Out</Link>
       <button onClick={() => changeTheme('es')}>Change Theme</button>
     </div>
