@@ -6,19 +6,45 @@ const RelationshipAspect = require('../models/aspects/relationship');
 
 const saltRounds = 10;
 
-async function createUser (req, res) {
+const AUTH_SECRET = process.env.AUTH_SECRET;
+
+async function create (req, res) {
+  const { email, password, firstName, birthDate } = req.body;
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return res
+      .status(409)
+      .send({ error: '409', message: 'User already exists' });
+  }
   try {
-    const { email, password, firstName, birthDate } = req.body;
+    if (email === '' || password === '') throw new Error();
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = new User({ email, password: hashedPassword, firstName, birthDate });
-    await user.save();
-    res.status(201).json({ user });
+    const newUser = new User({ email, password: hashedPassword, firstName, birthDate });
+
+    await newUser.save();
+    const accessToken = jwt.sign({ _id: newUser._id }, AUTH_SECRET);
+    res.status(201).json({ accessToken });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
   }
 }
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email: email });
+    const validatedPass = await bcrypt.compare(password, user.password);
+    if (!validatedPass) throw new Error();
+    const accessToken = jwt.sign({ _id: user._id }, AUTH_SECRET);
+    res.status(200).send({ accessToken });
+  } catch (error) {
+    res
+      .status(401)
+      .send({ error: '401', message: 'Username or password is incorrect' });
+  }
+};
 
 async function editUser (req, res) {
   try {
@@ -201,7 +227,8 @@ async function deleteRelationship (req, res) {
 }
 
 module.exports = {
-  createUser,
+  create,
+  login,
   editUser,
   addEntryToAspect,
   addAspect,
