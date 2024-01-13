@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authMiddleware = require('../middlewares/auth');
 
 const {
   getEntries,
@@ -10,16 +11,16 @@ const {
   deleteEntry
 } = require('../controllers/entries');
 
-router.get('/', getEntries);
+router.get('/', authMiddleware, getEntries);
 
-router.post('/create', addEntry);
+router.post('/create', authMiddleware, addEntry);
 
-router.put('/:entryId', editEntry);
+router.put('/:entryId', authMiddleware, editEntry);
 
-router.put('/add/aspect/:entryId/:aspectId', addAspectToEntry);
+router.put('/add/aspect/:entryId/:aspectId', authMiddleware, addAspectToEntry);
 
-router.put('/remove/aspect/:entryId/:aspectId', removeAspectFromEntry);
+router.put('/remove/aspect/:entryId/:aspectId', authMiddleware, removeAspectFromEntry);
 
-router.delete('/:entryId', deleteEntry);
+router.delete('/:entryId', authMiddleware, deleteEntry);
 
 module.exports = router;

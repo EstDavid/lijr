@@ -2,7 +2,6 @@ const { GenericAspect } = require('../models/aspects');
 const Entry = require('../models/entry');
 const User = require('../models/user');
 
-
 async function getEntries (req, res) {
   try {
     const { _id } = req.user;

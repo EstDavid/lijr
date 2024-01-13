@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const usersRouter = require('./routers/users');
 const entriesRouter = require('./routers/entries');
 const aspectsRouter = require('./routers/aspects');
@@ -7,7 +8,6 @@ const aspectsRouter = require('./routers/aspects');
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
-require('dotenv').config();
 
 const MONGODB_URI = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development'
   ? process.env.MONGODB_URI_TEST

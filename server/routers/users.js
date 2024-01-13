@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  createUser,
+  create,
   editUser,
   addEntryToAspect,
   addAspect,
@@ -12,7 +12,7 @@ const {
 } = require('../controllers/users');
 
 // Route to add a user
-router.post('/create', createUser);
+router.post('/create', create);
 
 // Route to edit user details
 router.put('/edit/:id', editUser);

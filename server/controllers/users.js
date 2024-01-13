@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const Entry = require('../models/entry');
@@ -23,8 +24,8 @@ async function create (req, res) {
     const newUser = new User({ email, password: hashedPassword, firstName, birthDate });
 
     await newUser.save();
-    const accessToken = jwt.sign({ _id: newUser._id }, AUTH_SECRET);
-    res.status(201).json({ accessToken });
+    const token = jwt.sign({ _id: newUser._id }, AUTH_SECRET);
+    res.status(201).json({ token });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
@@ -37,8 +38,8 @@ const login = async (req, res) => {
     const user = await User.findOne({ email: email });
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
-    const accessToken = jwt.sign({ _id: user._id }, AUTH_SECRET);
-    res.status(200).send({ accessToken });
+    const token = jwt.sign({ _id: user._id }, AUTH_SECRET);
+    res.status(200).send({ token });
   } catch (error) {
     res
       .status(401)
