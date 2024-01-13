@@ -5,9 +5,13 @@ const usersRouter = require('./routers/users');
 const entriesRouter = require('./routers/entries');
 const aspectsRouter = require('./routers/aspects');
 
+const corsConfig = {
+  origin: process.env.CLIENT_ORIGIN,
+  credentials: true,
+};
+
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-
 
 const MONGODB_URI = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development'
   ? process.env.MONGODB_URI_TEST
@@ -30,7 +34,7 @@ const PORT = process.env.NODE_ENV === 'test'
   : 3001;
 
 app
-  .use(cors())
+  .use(cors(corsConfig))
   .use(express.json())
   .use(express.urlencoded({ extended: true }));
 
