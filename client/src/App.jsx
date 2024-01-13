@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { JournalContext } from './JournalContext.jsx';
+import { UiContext } from './context/contexts/UiContext';
 import Homepage from './components/Homepage.jsx';
 
 const App = () => (
@@ -43,15 +43,13 @@ const Dashboard = () => (
 
 // Header component
 const DashboardHeader = () => {
-  const { ui, themeActions } = useContext(JournalContext);
-
-  const { changeTheme } = themeActions;
+  const { state, dispatch, setTheme } = useContext(UiContext);
 
   return (
     <div id="dashboard-header" className="container">
-      Header {ui.theme}
+      Header {state.theme}
       <Link to="/">Sign Out</Link>
-      <button onClick={() => changeTheme('es')}>Change Theme</button>
+      <button onClick={() => setTheme(dispatch, 'es')}>Change Theme</button>
     </div>
   );
 };
