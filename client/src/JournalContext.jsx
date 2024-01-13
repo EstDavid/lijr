@@ -6,13 +6,22 @@ const initialState = {
   ui: {
     theme: 'dark',
     language: 'en',
+    selectedAspect: null,
   },
   user: {
     loggedIn: false,
-    id: '',
+    id: null,
   },
   journalData: {
     entries: [],
+  },
+  filters: {
+    categories: [],
+    aspects: [],
+    timelineFrom: null,
+    timelineTo: null,
+    vibrationMin: 0,
+    vibrationMax: 1000,
   },
 };
 
