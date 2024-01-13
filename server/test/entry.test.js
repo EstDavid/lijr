@@ -10,11 +10,13 @@ const { user1, entry1, entry2, aspect1 } = require('./mocks');
 
 const api = supertest(app);
 
+const usersApiPath = '/api/users';
 const entriesApiPath = '/api/entries';
 
 let user;
 let entry;
 let aspect;
+let token;
 
 beforeEach(async () => {
   // Clear the test database before each test
@@ -23,8 +25,13 @@ beforeEach(async () => {
   await GenericAspect.deleteMany({});
   await RelationshipAspect.deleteMany({});
 
-  user = new User(user1);
-  await user.save();
+  const response = await api
+    .post(`${usersApiPath}/create`)
+    .send(user1);
+
+  token = response.body.token;
+
+  user = await User.findOne();
 
   entry = new Entry({ ...entry1, user: user._id });
   await entry.save();
@@ -46,7 +53,8 @@ describe('Entry Routes', () => {
     const thirdEntry = new Entry({ ...entry1, user: 'another-user' });
     await thirdEntry.save();
     const response = await api
-      .get(`${entriesApiPath}/${user._id}`);
+      .get(`${entriesApiPath}`)
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response.statusCode).toBe(201);
 
@@ -59,9 +67,28 @@ describe('Entry Routes', () => {
     expect(response.body.entries[1].textBody).toEqual(secondEntry.textBody);
   });
 
+  it('should add an entry for a user', async () => {
+    const response = await api
+      .post(`${entriesApiPath}/create`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(entry1);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.user).toHaveProperty('_id');
+    expect(response.body.user.entries.length).toBe(1);
+
+    expect(response.body.entry).toHaveProperty('_id');
+    expect(JSON.stringify(response.body.entry.user)).toEqual(JSON.stringify(user._id));
+    expect(response.body.entry.title).toEqual(entry1.title);
+    expect(response.body.entry.textBody).toEqual(entry1.textBody);
+    expect(response.body.entry.visibility).toEqual('private');
+    expect(response.body.entry.journaledDate).toBeUndefined();
+  });
+
   it('should edit an Entry', async () => {
     const response = await api
-      .put(`${entriesApiPath}/edit/${entry._id}`)
+      .put(`${entriesApiPath}/${entry._id}`)
+      .set('Authorization', `Bearer ${token}`)
       .send(entry2);
 
     expect(response.statusCode).toBe(201);
@@ -74,14 +101,16 @@ describe('Entry Routes', () => {
 
   it('should add a life aspect to an entry and remove it', async () => {
     const response1 = await api
-      .put(`${entriesApiPath}/aspect/add/${entry._id}/${aspect._id}`);
+      .put(`${entriesApiPath}/add/aspect/${entry._id}/${aspect._id}`)
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response1.statusCode).toBe(201);
     expect(response1.body.entry.lifeAspects.genericAspects.length).toBe(1);
     expect(JSON.stringify(response1.body.entry.lifeAspects.genericAspects[0])).toEqual(JSON.stringify(aspect._id));
 
     const response2 = await api
-      .put(`${entriesApiPath}/aspect/remove/${entry._id}/${aspect._id}`);
+      .put(`${entriesApiPath}/remove/aspect/${entry._id}/${aspect._id}`)
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response2.statusCode).toBe(201);
     expect(response2.body.entry.lifeAspects.genericAspects.length).toBe(0);
