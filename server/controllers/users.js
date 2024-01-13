@@ -49,10 +49,10 @@ const login = async (req, res) => {
 
 async function editUser (req, res) {
   try {
-    const id = req.params.id;
+    const { _id } = req.user;
     const { firstName, birthDate } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
-      id,
+      _id,
       { $set: { firstName, birthDate } },
       { new: true }
     );
@@ -62,50 +62,8 @@ async function editUser (req, res) {
   }
 }
 
-async function addAspectToEntry (req, res) {
-  try {
-    const { id, entryId } = req.params;
-
-    const {
-      title,
-      description,
-      aspectType,
-      visibility,
-      timePeriodStart,
-      timePeriodEnd
-    } = req.body;
-
-    const aspect = new GenericAspect({
-      user: id,
-      title,
-      description,
-      aspectType,
-      visibility,
-      timePeriodStart,
-      timePeriodEnd,
-      entries: [entryId]
-    });
-
-    await aspect.save();
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $push: { 'lifeAspects.genericAspects': aspect._id } },
-      { new: true }
-    );
-    const entry = await Entry.findByIdAndUpdate(
-      entryId,
-      { $push: { 'lifeAspects.genericAspects': aspect._id } },
-      { new: true }
-    );
-    res.status(201).json({ aspect, user, entry });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 module.exports = {
   create,
   login,
   editUser,
-  addAspectToEntry,
 };
