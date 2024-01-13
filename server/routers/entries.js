@@ -3,17 +3,23 @@ const router = express.Router();
 
 const {
   getEntries,
+  addEntry,
   editEntry,
   addAspectToEntry,
-  removeAspectFromEntry
+  removeAspectFromEntry,
+  deleteEntry
 } = require('../controllers/entries');
 
-router.get('/:userId', getEntries);
+router.get('/', getEntries);
 
-router.put('/edit/:id', editEntry);
+router.post('/create', addEntry);
 
-router.put('/aspect/add/:id/:aspectId', addAspectToEntry);
+router.put('/:entryId', editEntry);
 
-router.put('/aspect/remove/:id/:aspectId', removeAspectFromEntry);
+router.put('/add/aspect/:entryId/:aspectId', addAspectToEntry);
+
+router.put('/remove/aspect/:entryId/:aspectId', removeAspectFromEntry);
+
+router.delete('/:entryId', deleteEntry);
 
 module.exports = router;

@@ -35,29 +35,6 @@ async function editUser (req, res) {
   }
 }
 
-async function addEntry (req, res) {
-  try {
-    const id = req.params.id;
-    const { title, textBody, journaledDate, visibility } = req.body;
-    const entry = new Entry({
-      user: id,
-      title,
-      textBody,
-      journaledDate,
-      visibility
-    });
-    await entry.save();
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $push: { entries: entry._id } },
-      { new: true }
-    );
-    res.status(201).json({ entry, user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 async function addEntryToAspect (req, res) {
   try {
     const { id, aspectId } = req.params;
@@ -184,29 +161,6 @@ async function addRelationship (req, res) {
   }
 }
 
-async function deleteEntry (req, res) {
-  try {
-    const { id, entryId } = req.params;
-    await Entry.findByIdAndDelete(entryId);
-
-    const user = await User.findByIdAndUpdate(
-      id,
-      { $pull: { entries: entryId } },
-      { new: true }
-    );
-
-    await GenericAspect.updateMany(
-      {},
-      { $pull: { entries: entryId } },
-      { new: true }
-    );
-
-    res.json({ user });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
-
 async function deleteAspect (req, res) {
   try {
     const { id, aspectId } = req.params;
@@ -249,12 +203,10 @@ async function deleteRelationship (req, res) {
 module.exports = {
   createUser,
   editUser,
-  addEntry,
   addEntryToAspect,
   addAspect,
   addAspectToEntry,
   addRelationship,
-  deleteEntry,
   deleteAspect,
   deleteRelationship
 };
