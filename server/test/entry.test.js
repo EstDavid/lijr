@@ -40,6 +40,25 @@ afterAll(async () => {
 });
 
 describe('Entry Routes', () => {
+  it('should get all entries', async () => {
+    const secondEntry = new Entry({ ...entry2, title: 'This is my second Entry', user: user._id });
+    await secondEntry.save();
+    const thirdEntry = new Entry({ ...entry1, user: 'another-user' });
+    await thirdEntry.save();
+    const response = await api
+      .get(`${entriesApiPath}/${user._id}`);
+
+    expect(response.statusCode).toBe(201);
+
+    expect(response.body.entries.length).toBe(2);
+
+    expect(JSON.stringify(response.body.entries[0]._id)).toEqual(JSON.stringify(entry._id));
+    expect(JSON.stringify(response.body.entries[1]._id)).toEqual(JSON.stringify(secondEntry._id));
+
+    expect(response.body.entries[0].textBody).toEqual(entry.textBody);
+    expect(response.body.entries[1].textBody).toEqual(secondEntry.textBody);
+  });
+
   it('should edit an Entry', async () => {
     const response = await api
       .put(`${entriesApiPath}/edit/${entry._id}`)

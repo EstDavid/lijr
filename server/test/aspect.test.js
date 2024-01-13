@@ -10,7 +10,6 @@ const { user1, entry1, entry2, aspect1, aspect2 } = require('./mocks');
 
 const api = supertest(app);
 
-const usersApiPath = '/api/users';
 const aspectsApiPath = '/api/aspects';
 
 let user;
@@ -41,6 +40,28 @@ afterAll(async () => {
 });
 
 describe('Aspect Routes', () => {
+  it('should get all aspects', async () => {
+    const secondAspect = new GenericAspect({ ...aspect2, title: 'This is my second Aspect', aspectType: 'Joy', user: user._id });
+    await secondAspect.save();
+    const thirdEntry = new GenericAspect({ ...aspect1, user: 'another-user' });
+    await thirdEntry.save();
+
+    const response = await api
+      .get(`${aspectsApiPath}/${user._id}`);
+
+    console.log(response.error);
+
+    expect(response.statusCode).toBe(201);
+
+    expect(response.body.aspects.length).toBe(2);
+
+    expect(JSON.stringify(response.body.aspects[0]._id)).toEqual(JSON.stringify(aspect._id));
+    expect(JSON.stringify(response.body.aspects[1]._id)).toEqual(JSON.stringify(secondAspect._id));
+
+    expect(response.body.aspects[0].description).toEqual(aspect.description);
+    expect(response.body.aspects[1].description).toEqual(secondAspect.description);
+  });
+
   it('should edit an aspect', async () => {
     const response = await api
       .put(`${aspectsApiPath}/edit/${aspect._id}`)
