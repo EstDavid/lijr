@@ -1,8 +1,21 @@
 const Entry = require('../models/entry');
 
+async function getEntries (req, res) {
+  try {
+    const { userId } = req.params;
+
+    const entries = await Entry.find(
+      { user: userId }
+    );
+    res.status(201).json({ entries });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function editEntry (req, res) {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
     const { title, textBody, journaledDate, visibility } = req.body;
 
     const updatedEntry = await Entry.findByIdAndUpdate(
@@ -47,6 +60,7 @@ async function removeAspectFromEntry (req, res) {
 }
 
 module.exports = {
+  getEntries,
   editEntry,
   addAspectToEntry,
   removeAspectFromEntry

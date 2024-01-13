@@ -1,5 +1,18 @@
 const { GenericAspect } = require('../models/aspects');
 
+async function getAspects (req, res) {
+  try {
+    const { userId } = req.params;
+
+    const aspects = await GenericAspect.find(
+      { user: userId }
+    );
+    res.status(201).json({ aspects });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 async function editAspect (req, res) {
   try {
     const id = req.params.id;
@@ -63,6 +76,7 @@ async function removeEntryFromAspect (req, res) {
 }
 
 module.exports = {
+  getAspects,
   editAspect,
   addEntryToAspect,
   removeEntryFromAspect

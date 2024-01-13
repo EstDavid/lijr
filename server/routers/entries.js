@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const {
+  getEntries,
   editEntry,
   addAspectToEntry,
   removeAspectFromEntry
 } = require('../controllers/entries');
+
+router.get('/:userId', getEntries);
 
 router.put('/edit/:id', editEntry);
 
