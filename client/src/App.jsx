@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { JournalContext } from './JournalContext.jsx';
+import Homepage from './components/Homepage.jsx';
 
 const App = () => (
   <Router>
@@ -11,16 +12,6 @@ const App = () => (
       <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   </Router>
-);
-
-// Homepage component
-const Homepage = () => (
-  <div id="homepage" className="container">
-    Homepage
-    <Link to="/login">Login</Link>
-    <Link to="/signin">Sign In</Link>
-    <Link to="/dashboard">Dashboard</Link>
-  </div>
 );
 
 // Login component
