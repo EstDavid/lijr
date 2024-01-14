@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+:root {
+	--color-grayscale-100: hsl(42,11.1%,90%);
+	--color-grayscale-200: hsl(44,10.8%,50%);
+	--color-grayscale-300: hsl(40,11.8%,30%);
+	--color-grayscale-400: hsl(38,11.1%,20%);
+	--color-grayscale-500: hsl(48,11.1%,12%);
+	--color-information-100: hsl(192,68.6%,90%);
+	--color-information-200: hsl(192,70.1%,75.1%);
+	--color-information-300: hsl(192,69.8%,64.9%);
+	--color-information-400: hsl(192,70.3%,55.1%);
+	--color-information-500: hsl(192,69.9%,42.9%);
+	--color-success-100: hsl(200,94.8%,84.9%);
+	--color-success-200: hsl(200,95.5%,65.1%);
+	--color-success-300: hsl(200,95.5%,34.9%);
+	--color-success-400: hsl(200,95.3%,24.9%);
+	--color-success-500: hsl(200,94.4%,14.1%);
+	--color-warning-100: hsl(40,97.1%,86.7%);
+	--color-warning-200: hsl(40,98%,60.2%);
+	--color-warning-300: hsl(40,98.3%,47.5%);
+	--color-warning-400: hsl(40,98.3%,23.5%);
+	--color-warning-500: hsl(40,97.8%,17.6%);
+	--color-danger-100: hsl(32,100%,90%);
+	--color-danger-200: hsl(32,100%,69%);
+	--color-danger-300: hsl(32,100%,49%);
+	--color-danger-400: hsl(32,100%,40%);
+	--color-danger-500: hsl(32,100%,30%);
+	--color-brand-100: hsl(43,100%,89.8%);
+	--color-brand-200: hsl(43,100%,80%);
+	--color-brand-300: hsl(43,100%,70%);
+	--color-brand-400: hsl(43,100%,60%);
+	--color-brand-500: hsl(43,100%,51%);
+
+  
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--color-grayscale-100);
+  background-color: var(--color-grayscale-500);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --border-color: #fff;
+  --height-dashboard-header: 60px;
+  --width-sidebar: 200px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.text-style-headings-heading-6 {
+	font-size: 1rem;
+	font-family: "Comfortaa";
+	font-weight: 600;
+	font-style: normal;
+	line-height: 19px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-headings-heading-5 {
+	font-size: 1.25rem;
+	font-family: "Comfortaa";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 24px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-headings-heading-4 {
+	font-size: 1.5rem;
+	font-family: "Comfortaa";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 30px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-headings-heading-3 {
+	font-size: 2rem;
+	font-family: "Comfortaa";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 37px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-headings-heading-2 {
+	font-size: 2.5rem;
+	font-family: "Comfortaa";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 47px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-headings-heading-1 {
+	font-size: 3rem;
+	font-family: "Comfortaa";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 60px;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-paragraphs-large {
+	font-size: 1.5rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 400;
+	font-style: normal;
+	line-height: 150%;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-paragraphs-base {
+	font-size: 1rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 400;
+	font-style: normal;
+	line-height: 175%;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-paragraphs-small {
+	font-size: 0.75rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 400;
+	font-style: normal;
+	line-height: 175%;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-labels-light {
+	font-size: 1rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 400;
+	font-style: normal;
+	line-height: 120%;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-labels-medium {
+	font-size: 1rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 120%;
+	text-decoration: none;
+	text-transform: none;
+}
+.text-style-labels-strong {
+	font-size: 1rem;
+	font-family: "NanumGothicCoding";
+	font-weight: 700;
+	font-style: normal;
+	line-height: 120%;
+	text-decoration: none;
+	text-transform: none;
+}

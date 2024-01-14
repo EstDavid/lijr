@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import './globals.css';
 import './index.css';
 import { UiProvider } from './context/contexts/UiContext';
 import { UserProvider } from './context/contexts/UserContext';
