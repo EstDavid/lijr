@@ -35,3 +35,11 @@ const EntrySchema = new mongoose.Schema({
 const Entry = mongoose.model('Entry', EntrySchema);
 
 module.exports = Entry;
+
+[
+  {
+    title: 'Deciding to study software development',
+    textBody: 'I enjoy a lot working with computers. And it seems that there\'s plenty of well paid jobs.\n Lately I am thinking a lot about it',
+    journaledDate: '21-03-2023'
+  }
+];
