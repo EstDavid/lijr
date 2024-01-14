@@ -11,8 +11,8 @@ const Login = () => {
     // event.preventDefault()
     try {
       const userResponse = await userService.login({
-        email: 'john@examples.com',
-        password: 'password123',
+        email: 'john@gmail.com',
+        password: 'adminpassword',
       });
 
       window.localStorage.setItem('loggedUser', JSON.stringify(userResponse));

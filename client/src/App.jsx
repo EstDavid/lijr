@@ -9,19 +9,23 @@ import Homepage from './components/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
+import { JournalContext } from './context/contexts/JournalContext';
 
 const App = () => {
-  const { dispatch, login } = useContext(UserContext);
+  const { dispatch: userDispatch, login } = useContext(UserContext);
+  const { dispatch: entriesDispatch, setEntries } = useContext(JournalContext);
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
 
     if (loggedUser) {
-      login(dispatch, loggedUser.user);
+      login(userDispatch, loggedUser.user);
 
       userService.setToken(loggedUser.token);
       entriesService.setToken(loggedUser.token);
 
-      entriesService.getAll().then((entries) => console.log(entries));
+      entriesService.getAll().then((data) => {
+        setEntries(entriesDispatch, data.entries);
+      });
     }
   }, []);
   return (
