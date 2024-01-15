@@ -6,11 +6,11 @@
 }
 
 :root {
-	--color-grayscale-100: hsl(42,11.1%,90%);
-	--color-grayscale-200: hsl(44,10.8%,50%);
-	--color-grayscale-300: hsl(40,11.8%,30%);
-	--color-grayscale-400: hsl(38,11.1%,20%);
-	--color-grayscale-500: hsl(48,11.1%,12%);
+	--color-grayscale-100: hsl(180,11.1%,90%);
+	--color-grayscale-200: hsl(180,10.8%,50%);
+	--color-grayscale-300: hsl(180,11.8%,30%);
+	--color-grayscale-400: hsl(180,11.1%,20%);
+	--color-grayscale-500: hsl(180,11.1%,12%);
 	--color-information-100: hsl(192,68.6%,90%);
 	--color-information-200: hsl(192,70.1%,75.1%);
 	--color-information-300: hsl(192,69.8%,64.9%);
@@ -37,6 +37,19 @@
 	--color-brand-400: hsl(43,100%,60%);
 	--color-brand-500: hsl(43,100%,51%);
 
+	--color-transparency-800: hsla(180,11.1%,12%,0.8);
+	--color-transparency-600: hsla(180,11.1%,12%,0.6);
+	--color-transparency-500: hsla(180,11.1%,12%,0.5);
+
+
+	--padding-general: 12px;
+	--padding-text-x: 10px;
+	--padding-text-y: 5px;
+	--padding-right-filters: 15px;
+	--padding-button-x: 10px;
+	--padding-button-y: 8px;
+	--radius-button: 6px;
+	--padding-container: 16px;
   
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -53,12 +66,18 @@
 
   --border-color: #fff;
   --height-dashboard-header: 60px;
-  --width-sidebar: 200px;
+  --width-sidebar: 240px;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
 }
 
 .text-style-headings-heading-6 {

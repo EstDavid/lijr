@@ -1,7 +1,7 @@
 // Timeline component
 const Timeline = () => (
   <div id="timeline" className="">
-    Timeline
+    <h3>Timeline</h3>
   </div>
 );
 

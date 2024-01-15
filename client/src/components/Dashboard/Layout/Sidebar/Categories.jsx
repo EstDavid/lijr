@@ -1,7 +1,7 @@
 // Categories component
 const Categories = () => (
   <div id="categories" className="">
-    Categories
+    <h3>Categories</h3>
   </div>
 );
 

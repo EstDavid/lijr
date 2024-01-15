@@ -1,7 +1,7 @@
 // VibrationBar component
 const VibrationBar = () => (
   <div id="vibration-bar" className="">
-    Vibration Bar
+    <h3>Vibration Bar</h3>
   </div>
 );
 
