@@ -4,7 +4,7 @@ import Sidebar from './Dashboard/Layout/Sidebar/Sidebar';
 import PanelDashboard from './Dashboard/PanelDashboard/PanelDashboard';
 
 const Dashboard = () => {
-  const editing = false;
+  const editing = true;
 
   return (
     <div>

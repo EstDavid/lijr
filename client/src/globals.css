@@ -51,7 +51,8 @@
 	--radius-button: 6px;
 	--padding-container: 16px;
   
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Hind Madurai', sans-serif;
+
   line-height: 1.5;
   font-weight: 400;
 
@@ -82,7 +83,7 @@ button {
 
 .text-style-headings-heading-6 {
 	font-size: 1rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 600;
 	font-style: normal;
 	line-height: 19px;
@@ -91,7 +92,7 @@ button {
 }
 .text-style-headings-heading-5 {
 	font-size: 1.25rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 700;
 	font-style: normal;
 	line-height: 24px;
@@ -100,7 +101,7 @@ button {
 }
 .text-style-headings-heading-4 {
 	font-size: 1.5rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 700;
 	font-style: normal;
 	line-height: 30px;
@@ -109,7 +110,7 @@ button {
 }
 .text-style-headings-heading-3 {
 	font-size: 2rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 700;
 	font-style: normal;
 	line-height: 37px;
@@ -118,7 +119,7 @@ button {
 }
 .text-style-headings-heading-2 {
 	font-size: 2.5rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 700;
 	font-style: normal;
 	line-height: 47px;
@@ -127,7 +128,7 @@ button {
 }
 .text-style-headings-heading-1 {
 	font-size: 3rem;
-	font-family: "Comfortaa";
+	font-family: 'Lora' sans-serif;
 	font-weight: 700;
 	font-style: normal;
 	line-height: 60px;
