@@ -48,7 +48,9 @@
 	--padding-right-filters: 15px;
 	--padding-button-x: 10px;
 	--padding-button-y: 8px;
+	--padding-entry-form: 30px;
 	--radius-button: 6px;
+	--radius-entry-form: 4px;
 	--padding-container: 16px;
   
   font-family: 'Hind Madurai', sans-serif;
@@ -80,6 +82,22 @@ button {
 	border: none;
 	cursor: pointer;
 }
+
+input  {
+	background-color: var(--color-grayscale-500);
+	font-size: large;
+	border: none;
+	padding: var(--padding-text-y) var(--padding-text-x);
+}
+
+input:focus {
+	outline: none;
+}
+
+input:disabled {
+	background-color: transparent;
+}	
+
 
 .text-style-headings-heading-6 {
 	font-size: 1rem;
