@@ -6,6 +6,120 @@ import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { getInputDateFormat, getLongDate } from '@/utils/entryFormats';
 import entriesService from '@/services/entries';
 
+const categories = [
+  'Personal',
+  'Decisions',
+  'Work',
+  'Health',
+  'Relationships',
+  'Family',
+  'Friends',
+  'Hobbies',
+  'Travel',
+  'Spirituality',
+  'Finances',
+  'Education',
+  'Career',
+  'Other'
+];
+
+const aspects = [
+  {
+    aspectType: 'Personal',
+    title: 'Going to the gym'
+  },
+  {
+    aspectType: 'Work',
+    title: 'Meeting with my boss'
+  },
+  {
+    aspectType: 'Hobbies',
+    title: 'Playing the guitar'
+  },
+  {
+    aspectType: 'Hobbies',
+    title: 'Playing beach volleyball'
+  }
+];
+
+const CategoriesSelector = ({ aspectList, categoryList }) => {
+  const [filteredCategories, setCategories] = useState(categoryList);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [aspects, setAspects] = useState(aspectList);
+  const [selectedAspect, setSelectedAspect] = useState('');
+
+  const filterCategories = (event) => {
+    const filter = event.target.value.toUpperCase();
+
+    setCategories((filteredCategories) => {
+      return filteredCategories.filter((category) => {
+        return category.toUpperCase().includes(filter);
+      });
+    });
+  };
+
+  const selectCategory = (category) => {
+    setSelectedCategory(category);
+  };
+  return (
+    <div className="dropdown-categories">
+      <div className="dropdown-categories-content">
+        {selectedCategory === '' ? (
+          <>
+            <input
+              type="text"
+              name="categories"
+              placeholder="Search categories..."
+              onKeyUp={filterCategories}
+            />
+            {filteredCategories.map((category) => {
+              return (
+                <div key={category} className="entry-form-category">
+                  <p onClick={() => selectCategory(category)}>{category}</p>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            {selectedAspect === '' ? (
+              <>
+                <p>{selectedCategory}</p>
+                <form>
+                  <input
+                    type="text"
+                    name="categories"
+                    placeholder="Search categories..."
+                    onKeyUp={filterCategories}
+                  />
+                </form>
+                {aspects
+                  .filter((aspect) => aspect.aspectType === selectedCategory)
+                  .map((aspect) => {
+                    return (
+                      <option
+                        key={aspect.title}
+                        className="entry-form-category"
+                      >
+                        <p onClick={() => setSelectedAspect(aspect)}>
+                          {aspect.title}
+                        </p>
+                      </option>
+                    );
+                  })}
+              </>
+            ) : (
+              <>
+                <p>{selectedAspect.title}</p>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const EntryForm = ({ entry }) => {
   const { dispatch: journalDispatch, addEntry } = useContext(JournalContext);
   const { dispatch: uiDispatch, setCreatingEntry } = useContext(UiContext);
@@ -70,11 +184,6 @@ const EntryForm = ({ entry }) => {
     <div className="entry-form-container">
       <form className="entry-form container" onSubmit={handleSubmit}>
         <div className="entry-form-header">
-          <div className="entry-form-cancel">
-            <button type="button" onClick={() => handleCancel()}>
-              <FontAwesomeIcon icon={faXmark} />
-            </button>
-          </div>
           <div className="entry-form-date">
             <h4>{getLongDate(date)}</h4>
             {dateEnabled && (
@@ -114,8 +223,22 @@ const EntryForm = ({ entry }) => {
             onChange={handleTextareaChange}
             required
           />
+          <div className="entry-form-aspects">
+            <div className="aspects-container"></div>
+            <CategoriesSelector
+              categoryList={categories}
+              aspectList={aspects}
+            />
+          </div>
         </div>
         <div className="entry-form-footer">
+          <button
+            type="button"
+            className="button-cancel"
+            onClick={() => handleCancel()}
+          >
+            Cancel
+          </button>
           <button type="submit">Save</button>
         </div>
       </form>
