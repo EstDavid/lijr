@@ -15,6 +15,12 @@ function uiReducer (state, action) {
         ...state,
         selectedAspect: action.payload,
       };
+    case 'SET_CREATING_ENTRY': {
+      return {
+        ...state,
+        creatingEntry: action.payload,
+      };
+    }
     default:
       return state;
   }

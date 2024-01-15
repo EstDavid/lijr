@@ -10,4 +10,8 @@ const setAspect = (dispatch, aspect) => {
   dispatch({ type: 'SET_ASPECT', payload: aspect });
 };
 
-export { setTheme, setLanguage, setAspect };
+const setCreatingEntry = (dispatch, creatingEntry) => {
+  dispatch({ type: 'SET_CREATING_ENTRY', payload: creatingEntry });
+};
+
+export { setTheme, setLanguage, setAspect, setCreatingEntry };

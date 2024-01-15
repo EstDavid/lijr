@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/entries/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE0ZWQ3YTdlMGJiYjdjZmExODdlYjQiLCJpYXQiOjE3MDUzMDc1MjZ9.TXNXGh8j9UKIIkJP3ZKrV3hrvaMSPTR39NTuIun-mV4
+ 
+ {
+  "title": "My first entry",
+  "textBody": "This is my first entry"
+ }

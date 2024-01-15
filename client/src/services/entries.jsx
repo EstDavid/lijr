@@ -3,12 +3,12 @@ const baseUrl = `${import.meta.env.VITE_API_URL}/entries`;
 let token = null;
 
 const setToken = (newToken) => {
-  token = `bearer ${newToken}`;
+  token = `Bearer ${newToken}`;
 };
 
 const getAll = async () => {
   const response = await fetch(baseUrl, {
-    headers: { Authorization: token },
+    headers: { Authorization: token }
   });
 
   const data = await response.json();
@@ -16,13 +16,13 @@ const getAll = async () => {
 };
 
 const create = async (entry) => {
-  const response = await fetch(baseUrl, {
+  const response = await fetch(baseUrl + '/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token,
+      Authorization: token
     },
-    body: JSON.stringify(entry),
+    body: JSON.stringify(entry)
   });
   const data = await response.json();
   return data;
@@ -33,9 +33,9 @@ const edit = async (entry) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token,
+      Authorization: token
     },
-    body: JSON.stringify(entry),
+    body: JSON.stringify(entry)
   });
   const data = await response.json();
   return data;
@@ -44,7 +44,7 @@ const edit = async (entry) => {
 const remove = async (id) => {
   const response = await fetch(`${baseUrl}/${id}`, {
     headers: { Authorization: token },
-    method: 'DELETE',
+    method: 'DELETE'
   });
   const data = await response.json();
   return data;
