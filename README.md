@@ -2,6 +2,23 @@
 
 Journal about emotions and experiences to better navigate your life
 
+## How to run
+
+`cd server` and run the following tasks
+
+- npm install
+- npm run db:seed
+- npm run dev
+
+On a separate terminal, `cd client` and run
+
+- npm install
+- npm run dev
+
+On the client, go to login, click on 'Login' then go to 'Home' and click on Dashboard
+
+To run tests on the server: npm test
+
 ## Description
 
 LIJR allows you to keep track of different aspects of your life. This app is a tool designed to help you in your personal growth and to serve as a GPS when you wonder 'How did I end up here?'.
