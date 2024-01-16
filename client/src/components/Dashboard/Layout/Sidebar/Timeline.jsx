@@ -68,22 +68,24 @@ const Timeline = () => {
               Clear dates
             </button>
           </div>
-          <label htmlFor="dateFrom">From:</label>
-          <input
-            type="date"
-            id="dateFrom"
-            value={dateFrom}
-            onChange={(e) => setDateFrom(e.target.value)}
-            onBlur={handleDateChange}
-          />
-          <label htmlFor="dateTo">To:</label>
-          <input
-            type="date"
-            id="dateTo"
-            value={dateTo}
-            onChange={(e) => setDateTo(e.target.value)}
-            onBlur={handleDateChange}
-          />
+          <div className="date-inputs">
+            <label htmlFor="dateFrom">From:</label>
+            <input
+              type="date"
+              id="dateFrom"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              onBlur={handleDateChange}
+            />
+            <label htmlFor="dateTo">To:</label>
+            <input
+              type="date"
+              id="dateTo"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              onBlur={handleDateChange}
+            />
+          </div>
         </div>
       ) : null}
     </div>

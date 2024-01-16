@@ -75,6 +75,11 @@ label {
   }
 }
 
+.date-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
 .search-bar input {
   width: 100%;
   padding-left: 35px;

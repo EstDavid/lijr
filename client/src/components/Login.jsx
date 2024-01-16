@@ -49,7 +49,7 @@ const Login = () => {
         />
         <br />
         <button className="cancel">
-          <Link to="/login">{"Don't have an account?"}</Link>
+          <Link to="/signup">{"Don't have an account?"}</Link>
         </button>
         <button className="submit" type="submit">
           Log in

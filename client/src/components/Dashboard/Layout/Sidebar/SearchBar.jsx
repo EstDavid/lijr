@@ -7,7 +7,7 @@ const SearchBar = () => {
   const { state, dispatch, setSearchTerm } = useContext(FiltersContext);
   return (
     <div className="search-bar">
-      <FontAwesomeIcon icon={faSearch} className="icon" size="l" />
+      <FontAwesomeIcon icon={faSearch} className="icon" />
       <input
         type="text"
         placeholder="Search"
