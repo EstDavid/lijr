@@ -12,7 +12,11 @@ import Dashboard from './components/Dashboard';
 import { JournalContext } from './context/contexts/JournalContext';
 
 const App = () => {
-  const { dispatch: userDispatch, login } = useContext(UserContext);
+  const {
+    state: userState,
+    dispatch: userDispatch,
+    login
+  } = useContext(UserContext);
   const { dispatch: entriesDispatch, setEntries } = useContext(JournalContext);
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
@@ -31,7 +35,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route
+          path="/"
+          element={userState.user ? <Dashboard /> : <Homepage />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />

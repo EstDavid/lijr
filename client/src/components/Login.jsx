@@ -1,18 +1,22 @@
-import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import { UserContext } from '@/context/contexts/UserContext';
 import userService from '@/services/user';
 import entriesService from '@/services/entries';
+import InputField from './InputField';
 
 const Login = () => {
   const { dispatch, login } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    // event.preventDefault()
+  const handleLogin = async (event) => {
+    event.preventDefault();
     try {
       const userResponse = await userService.login({
-        email: 'john@gmail.com',
-        password: 'adminpassword',
+        email,
+        password
       });
 
       window.localStorage.setItem('loggedUser', JSON.stringify(userResponse));
@@ -21,14 +25,36 @@ const Login = () => {
 
       userService.setToken(userResponse.token);
       entriesService.setToken(userResponse.token);
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
   };
   return (
-    <div id="login" className="container">
-      <button onClick={handleLogin}>Login</button>
-      <Link to="/">Home</Link>
+    <div id="login" className="container signup-login">
+      <form onSubmit={handleLogin}>
+        <InputField
+          label="signup-email"
+          type="email"
+          value={email}
+          required={true}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <InputField
+          label="signup-password"
+          type="password"
+          value={password}
+          required={true}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br />
+        <button className="cancel">
+          <Link to="/login">Don't have an account?</Link>
+        </button>
+        <button className="submit" type="submit">
+          Log in
+        </button>
+      </form>
     </div>
   );
 };
