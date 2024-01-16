@@ -13,7 +13,8 @@ import {
 
 const initialState = {
   entries: [],
-  aspects: []
+  aspects: [],
+  tags: new Set([])
 };
 
 const JournalContext = createContext();
@@ -22,18 +23,20 @@ const JournalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(journalReducer, initialState);
 
   return (
-    <JournalContext.Provider value={{
-      state,
-      dispatch,
-      setEntries,
-      addEntry,
-      updateEntry,
-      removeEntry,
-      setAspects,
-      addAspect,
-      updateAspect,
-      removeAspect
-    }}>
+    <JournalContext.Provider
+      value={{
+        state,
+        dispatch,
+        setEntries,
+        addEntry,
+        updateEntry,
+        removeEntry,
+        setAspects,
+        addAspect,
+        updateAspect,
+        removeAspect
+      }}
+    >
       {children}
     </JournalContext.Provider>
   );

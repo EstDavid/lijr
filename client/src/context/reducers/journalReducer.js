@@ -1,29 +1,51 @@
+const getTags = (entries) => {
+  const tags = new Set();
+  entries.forEach((entry) => {
+    entry.tags.forEach((tag) => {
+      tags.add(tag);
+    });
+  });
+  return tags;
+};
+
 function journalReducer (state, action) {
   switch (action.type) {
     case 'SET_ENTRIES':
+
       return {
         ...state,
         entries: action.payload,
+        tags: getTags(action.payload),
       };
-    case 'ADD_ENTRY':
+    case 'ADD_ENTRY': {
+      const newEntries = [...state.entries, action.payload];
       return {
         ...state,
-        entries: [...state.entries, action.payload],
+        entries: newEntries,
+        tags: getTags(newEntries),
       };
-    case 'UPDATE_ENTRY':
+    }
+    case 'UPDATE_ENTRY': {
+      const newEntries = state.entries.map((entry) =>
+        entry._id === action.payload._id ? action.payload : entry
+      );
+
       return {
         ...state,
-        entries: state.entries.map((entry) =>
-          entry._id === action.payload._id ? action.payload : entry
-        ),
+        entries: newEntries,
+        tags: getTags(newEntries),
       };
-    case 'REMOVE_ENTRY':
+    }
+    case 'REMOVE_ENTRY': {
+      const newEntries = state.entries.filter(
+        (entry) => entry._id !== action.payload
+      );
       return {
         ...state,
-        entries: state.entries.filter(
-          (entry) => entry._id !== action.payload
-        ),
+        entries: newEntries,
+        tags: getTags(newEntries),
       };
+    }
     case 'SET_ASPECTS':
       return {
         ...state,

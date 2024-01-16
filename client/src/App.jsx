@@ -18,6 +18,7 @@ const App = () => {
     login
   } = useContext(UserContext);
   const { dispatch: entriesDispatch, setEntries } = useContext(JournalContext);
+
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('loggedUser'));
 

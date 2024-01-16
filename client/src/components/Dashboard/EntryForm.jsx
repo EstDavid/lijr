@@ -24,24 +24,24 @@ const categories = [
   'Other'
 ];
 
-const aspects = [
-  {
-    aspectType: 'Personal',
-    title: 'Going to the gym'
-  },
-  {
-    aspectType: 'Work',
-    title: 'Meeting with my boss'
-  },
-  {
-    aspectType: 'Hobbies',
-    title: 'Playing the guitar'
-  },
-  {
-    aspectType: 'Hobbies',
-    title: 'Playing beach volleyball'
-  }
-];
+// const aspects = [
+//   {
+//     aspectType: 'Personal',
+//     title: 'Going to the gym'
+//   },
+//   {
+//     aspectType: 'Work',
+//     title: 'Meeting with my boss'
+//   },
+//   {
+//     aspectType: 'Hobbies',
+//     title: 'Playing the guitar'
+//   },
+//   {
+//     aspectType: 'Hobbies',
+//     title: 'Playing beach volleyball'
+//   }
+// ];
 
 const suggestions = categories.map((category) => {
   return {

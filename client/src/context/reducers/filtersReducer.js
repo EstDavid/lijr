@@ -1,22 +1,5 @@
 function filtersReducer (state, action) {
   switch (action.type) {
-    case 'ADD_CATEGORY':
-      return {
-        ...state,
-        categories: [...state.categories, action.payload],
-      };
-    case 'REMOVE_CATEGORY':
-      return {
-        ...state,
-        categories: state.categories.filter(
-          (category) => category._id !== action.payload._id
-        ),
-      };
-    case 'CLEAR_CATEGORIES':
-      return {
-        ...state,
-        categories: [],
-      };
     case 'ADD_ASPECT':
       return {
         ...state,

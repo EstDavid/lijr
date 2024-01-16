@@ -1,13 +1,5 @@
-const addCategory = (dispatch, category) => {
-  dispatch({ type: 'ADD_CATEGORY', payload: category });
-};
-
-const removeCategory = (dispatch, category) => {
-  dispatch({ type: 'REMOVE_CATEGORY', payload: category });
-};
-
 const clearCategories = (dispatch) => {
-  dispatch({ type: 'CLEAR_CATEGORIES' });
+  dispatch({ type: 'CLEAR_TAGS' });
 };
 
 const addAspect = (dispatch, aspect) => {
@@ -39,8 +31,6 @@ const setVibrationMax = (dispatch, vibrationMax) => {
 };
 
 export {
-  addCategory,
-  removeCategory,
   clearCategories,
   addAspect,
   removeAspect,

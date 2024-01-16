@@ -6,7 +6,7 @@ import { getYear, getDate } from '@/utils/entryFormats';
 import entriesService from '@/services/entries';
 
 // EntriesPanel component
-const EntriesPanel = ({ type }) => {
+const EntriesPanel = () => {
   const {
     state: journalState,
     dispatch: journalDispatch,
@@ -30,7 +30,7 @@ const EntriesPanel = ({ type }) => {
     (a, b) => new Date(getDate(b)) - new Date(getDate(a))
   );
   return (
-    <div id="entries-panel" className={`container ${type}`}>
+    <div id="entries-panel" className="container">
       {entryList.map((entry, index) => {
         if (index === 0) {
           return (
