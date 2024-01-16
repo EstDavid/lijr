@@ -1,16 +1,31 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UiContext } from '@/context/contexts/UiContext';
+import { UserContext } from '@/context/contexts/UserContext';
 
 // Header component
 const DashboardHeader = () => {
-  const { state, dispatch, setTheme } = useContext(UiContext);
+  const {
+    state: uiState,
+    dispatch: uiDispatch,
+    setTheme
+  } = useContext(UiContext);
+  const { dispatch: userDispatch, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    window.localStorage.removeItem('loggedUser');
+    logout(userDispatch);
+    navigate('/');
+  };
 
   return (
     <div id="dashboard-header" className="container">
-      Header {state.theme}
-      <Link to="/">Sign Out</Link>
-      <button onClick={() => setTheme(dispatch, 'es')}>Change Theme</button>
+      Header {uiState.theme}
+      <button className="cancel" onClick={handleSignout}>
+        Sign Out
+      </button>
+      <button onClick={() => setTheme(uiDispatch, 'es')}>Change Theme</button>
     </div>
   );
 };

@@ -7,6 +7,13 @@ const userReducer = (state, action) => {
         loading: false,
         error: null,
       };
+    case 'REMOVE_USER':
+      return {
+        ...state,
+        user: null,
+        loading: false,
+        error: null,
+      };
     case 'SET_ERROR':
       return {
         ...state,

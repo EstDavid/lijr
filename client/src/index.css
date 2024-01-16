@@ -346,11 +346,12 @@ justify-content: center;
   label {
     color: var(--color-information-100);
   }
-  button.cancel{
-    background-color: transparent;
-    color: var(--color-information-100);
-    border: 1px solid var(--color-information-500);
-  }
+}
+
+button.cancel{
+  background-color: transparent;
+  color: var(--color-information-100);
+  border: 1px solid var(--color-information-500);
 }
 
 .signup-login-input {
