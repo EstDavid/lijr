@@ -13,7 +13,11 @@ const EntryPreview = ({ entry, handleDeleteEntry, handleSelectEntry }) => {
           <h4>{getShortDate(entry)}</h4>
           <h3>{entry.title}</h3>
         </div>
-        <button onClick={() => handleDeleteEntry(entry._id)} type="button">
+        <button
+          onClick={() => handleDeleteEntry(entry._id)}
+          className="delete-entry"
+          type="button"
+        >
           <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>

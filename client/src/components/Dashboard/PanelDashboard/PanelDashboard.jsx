@@ -2,11 +2,11 @@ import PanelHeader from './PanelHeader/PanelHeader';
 import EntriesPanel from './EntriesPanel/EntriesPanel';
 
 // PanelDashboard component
-const PanelDashboard = ({ type }) => {
+const PanelDashboard = () => {
   return (
-    <div id="panel-dashboard" className={`container ${type}`}>
-      <PanelHeader type={type} />
-      <EntriesPanel type={type} />
+    <div id="panel-dashboard">
+      <PanelHeader />
+      <EntriesPanel />
     </div>
   );
 };

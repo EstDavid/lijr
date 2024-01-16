@@ -2,6 +2,10 @@ const setTags = (dispatch, tags) => {
   dispatch({ type: 'SET_TAGS', payload: tags });
 };
 
+const setSearchTerm = (dispatch, term) => {
+  dispatch({ type: 'SET_SEARCH_TERM', payload: term });
+};
+
 const addAspect = (dispatch, aspect) => {
   dispatch({ type: 'ADD_ASPECT', payload: aspect });
 };
@@ -33,6 +37,7 @@ const setVibrationMax = (dispatch, vibrationMax) => {
 export {
   setTags,
   addAspect,
+  setSearchTerm,
   removeAspect,
   clearAspects,
   setTimelineFrom,

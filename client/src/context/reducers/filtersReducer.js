@@ -10,6 +10,11 @@ function filtersReducer (state, action) {
         ...state,
         aspects: [...state.aspects, action.payload],
       };
+    case 'SET_SEARCH_TERM':
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
     case 'REMOVE_ASPECT':
       return {
         ...state,

@@ -3,6 +3,7 @@ import filtersReducer from '../reducers/filtersReducer';
 import {
   setTags,
   addAspect,
+  setSearchTerm,
   removeAspect,
   clearAspects,
   setTimelineFrom,
@@ -14,6 +15,7 @@ import {
 const initialState = {
   tags: new Set([]),
   aspects: [],
+  searchTerm: '',
   timelineFrom: null,
   timelineTo: null,
   vibrationMin: 0,
@@ -32,6 +34,7 @@ const FiltersProvider = ({ children }) => {
         dispatch,
         setTags,
         addAspect,
+        setSearchTerm,
         removeAspect,
         clearAspects,
         setTimelineFrom,

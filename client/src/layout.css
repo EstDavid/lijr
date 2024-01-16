@@ -10,7 +10,7 @@
 
 #sidebar {
   width: var(--width-sidebar);
-  height: calc(100vh - var(--height-dashboard-header));
+  height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column; 
@@ -64,6 +64,22 @@ ul {
 }
 label {
   font-size: large;
+}
+.search-bar {
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+  }
+}
+
+.search-bar input {
+  width: 100%;
+  padding-left: 35px;
+  background-color: var(--color-grayscale-400);
+  border-radius: 1000000px;
 }
 
 .filter-panel {

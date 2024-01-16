@@ -42,6 +42,11 @@ const EntriesPanel = () => {
         ? new Date(getDate(entry)) <= filtersState.timelineTo
         : true;
     })
+    .filter((entry) => {
+      if (filtersState.searchTerm === '') return true;
+      const termRegex = new RegExp(filtersState.searchTerm, 'i');
+      return entry.textBody.match(termRegex) || entry.title.match(termRegex);
+    })
     .sort((a, b) => new Date(getDate(b)) - new Date(getDate(a)));
 
   return (

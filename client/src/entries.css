@@ -203,6 +203,10 @@
   z-index: 1;
 }
 
+.delete-entry {
+  background-color: var(--color-brand-300);
+}
+
 .ReactTags__tags {
 width: 100%;
 }
