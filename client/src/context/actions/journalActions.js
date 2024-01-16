@@ -10,8 +10,8 @@ const updateEntry = (dispatch, entry) => {
   dispatch({ type: 'UPDATE_ENTRY', payload: entry });
 };
 
-const removeEntry = (dispatch, entry) => {
-  dispatch({ type: 'REMOVE_ENTRY', payload: entry });
+const removeEntry = (dispatch, entryId) => {
+  dispatch({ type: 'REMOVE_ENTRY', payload: entryId });
 };
 
 const setAspects = (dispatch, aspects) => {

@@ -21,6 +21,13 @@ function uiReducer (state, action) {
         creatingEntry: action.payload,
       };
     }
+    case 'SET_EDITING_ENTRY': {
+      return {
+        ...state,
+        creatingEntry: true,
+        currentEntry: action.payload,
+      };
+    }
     default:
       return state;
   }

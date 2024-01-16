@@ -29,7 +29,7 @@ const create = async (entry) => {
 };
 
 const edit = async (entry) => {
-  const response = await fetch(`${baseUrl}/${entry.id}`, {
+  const response = await fetch(`${baseUrl}/${entry._id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -43,8 +43,8 @@ const edit = async (entry) => {
 
 const remove = async (id) => {
   const response = await fetch(`${baseUrl}/${id}`, {
-    headers: { Authorization: token },
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: { Authorization: token }
   });
   const data = await response.json();
   return data;

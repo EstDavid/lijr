@@ -2,9 +2,10 @@ import { useContext, useState } from 'react';
 import { JournalContext } from '@/context/contexts/JournalContext';
 import { UiContext } from '@/context/contexts/UiContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { getInputDateFormat, getLongDate } from '@/utils/entryFormats';
 import entriesService from '@/services/entries';
+import TaggingPanel from './TaggingPanel';
 
 const categories = [
   'Personal',
@@ -42,93 +43,33 @@ const aspects = [
   }
 ];
 
-const CategoriesSelector = ({ aspectList, categoryList }) => {
-  const [filteredCategories, setCategories] = useState(categoryList);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [aspects, setAspects] = useState(aspectList);
-  const [selectedAspect, setSelectedAspect] = useState('');
-
-  const filterCategories = (event) => {
-    const filter = event.target.value.toUpperCase();
-
-    setCategories((filteredCategories) => {
-      return filteredCategories.filter((category) => {
-        return category.toUpperCase().includes(filter);
-      });
-    });
+const suggestions = categories.map((category) => {
+  return {
+    id: category,
+    text: category
   };
+});
 
-  const selectCategory = (category) => {
-    setSelectedCategory(category);
-  };
-  return (
-    <div className="dropdown-categories">
-      <div className="dropdown-categories-content">
-        {selectedCategory === '' ? (
-          <>
-            <input
-              type="text"
-              name="categories"
-              placeholder="Search categories..."
-              onKeyUp={filterCategories}
-            />
-            {filteredCategories.map((category) => {
-              return (
-                <div key={category} className="entry-form-category">
-                  <p onClick={() => selectCategory(category)}>{category}</p>
-                </div>
-              );
-            })}
-          </>
-        ) : (
-          <>
-            {selectedAspect === '' ? (
-              <>
-                <p>{selectedCategory}</p>
-                <form>
-                  <input
-                    type="text"
-                    name="categories"
-                    placeholder="Search categories..."
-                    onKeyUp={filterCategories}
-                  />
-                </form>
-                {aspects
-                  .filter((aspect) => aspect.aspectType === selectedCategory)
-                  .map((aspect) => {
-                    return (
-                      <option
-                        key={aspect.title}
-                        className="entry-form-category"
-                      >
-                        <p onClick={() => setSelectedAspect(aspect)}>
-                          {aspect.title}
-                        </p>
-                      </option>
-                    );
-                  })}
-              </>
-            ) : (
-              <>
-                <p>{selectedAspect.title}</p>
-              </>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const EntryForm = ({ entry }) => {
-  const { dispatch: journalDispatch, addEntry } = useContext(JournalContext);
-  const { dispatch: uiDispatch, setCreatingEntry } = useContext(UiContext);
+const EntryForm = () => {
+  const {
+    dispatch: journalDispatch,
+    addEntry,
+    updateEntry
+  } = useContext(JournalContext);
+  const {
+    state: uiState,
+    dispatch: uiDispatch,
+    setCreatingEntry,
+    setEditingEntry
+  } = useContext(UiContext);
+  const entry = uiState.currentEntry;
   const [date, setDate] = useState(entry?.journaledDate || new Date());
   const [title, setTitle] = useState(entry?.title || '');
   const [textBody, setTextBody] = useState(entry?.textBody || '');
   const [dateEnabled, setDateEnabled] = useState(false);
   const [titleEnabled, setTitleEnabled] = useState(false);
   const [edited, setEdited] = useState(false);
+  const [tags, setTags] = useState(entry?.tags || []);
 
   const handleTitlechange = (event) => {
     if (!titleEnabled) {
@@ -154,28 +95,44 @@ const EntryForm = ({ entry }) => {
     setTextBody(event.target.value);
   };
 
+  const handleTagsChange = (tags) => {
+    setTags(tags);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // TODO Set custom invalid messages for inputs, such in:
     // https://www.geeksforgeeks.org/form-required-attribute-with-a-custom-validation-message-in-html5/
-    const newEntry = {
+    const entryToSave = {
       title,
       textBody,
-      journaledDate: date
+      journaledDate: date,
+      tags: tags.map((tag) => tag.text)
     };
 
-    const response = await entriesService.create(newEntry);
+    let response;
+    if (entry) {
+      response = await entriesService.edit({ ...entryToSave, _id: entry._id });
+      updateEntry(journalDispatch, response.entry);
+    } else {
+      response = await entriesService.create(entryToSave);
+      addEntry(journalDispatch, response.entry);
+    }
     setDate(new Date());
     setTitle('');
     setTextBody('');
-    addEntry(journalDispatch, response.entry);
+    setEditingEntry(uiDispatch, null);
     setCreatingEntry(uiDispatch, false);
   };
 
   const handleCancel = () => {
     if (edited) {
-      window.confirm('Are you sure you want to discard your changes?');
+      if (window.confirm('Are you sure you want to discard your changes?')) {
+        setEditingEntry(uiDispatch, null);
+        setCreatingEntry(uiDispatch, false);
+      }
     } else {
+      setEditingEntry(uiDispatch, null);
       setCreatingEntry(uiDispatch, false);
     }
   };
@@ -224,10 +181,10 @@ const EntryForm = ({ entry }) => {
             required
           />
           <div className="entry-form-aspects">
-            <div className="aspects-container"></div>
-            <CategoriesSelector
-              categoryList={categories}
-              aspectList={aspects}
+            <TaggingPanel
+              initialSuggestions={suggestions}
+              entryTags={tags}
+              handleTagsChange={handleTagsChange}
             />
           </div>
         </div>

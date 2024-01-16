@@ -110,7 +110,6 @@ button {
 
 .entry-preview {
   padding: calc(var(--padding-container) / 2) 0;
-  cursor: pointer;
 }
 
 .entry-preview:hover {
@@ -130,6 +129,14 @@ button {
     flex: 1;
     color: var(--color-grayscale-200);
   }
+}
+
+.entry-preview-header-data {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
 .entry-preview-body {
@@ -267,7 +274,7 @@ button {
   justify-content: space-between;
   .button-cancel {
     background-color: var(--color-grayscale-200);
-
+color: var(--color-grayscale-500)
   }
 }
 
@@ -287,6 +294,28 @@ button {
   background-color: var(--color-grayscale-300);
   overflow: auto;
   z-index: 1;
+}
+
+.ReactTags__tags {
+width: 100%;
+}
+
+.ReactTags__tagInput {
+  width: 100%;
+  input{
+    width: 100%;
+    font-size: medium;
+  }
+}
+
+.ReactTags__selected {
+  margin-top: var(--padding-general);
+  button {
+    border-radius: 2px;
+    background-color: var(--color-information-300);
+    padding: 1px 4px;
+    margin: 0 10px 0 5px;
+  }
 }
 
 

@@ -4,14 +4,16 @@ import {
   setTheme,
   setLanguage,
   setAspect,
-  setCreatingEntry
+  setCreatingEntry,
+  setEditingEntry
 } from '../actions/uiActions';
 
 const initialState = {
   theme: 'dark',
   language: 'en',
   selectedAspect: null,
-  creatingEntry: false
+  creatingEntry: false,
+  currentEntry: null
 };
 
 const UiContext = createContext();
@@ -27,7 +29,8 @@ const UiProvider = ({ children }) => {
         setTheme,
         setLanguage,
         setAspect,
-        setCreatingEntry
+        setCreatingEntry,
+        setEditingEntry
       }}
     >
       {children}

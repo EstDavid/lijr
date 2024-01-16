@@ -14,4 +14,8 @@ const setCreatingEntry = (dispatch, creatingEntry) => {
   dispatch({ type: 'SET_CREATING_ENTRY', payload: creatingEntry });
 };
 
-export { setTheme, setLanguage, setAspect, setCreatingEntry };
+const setEditingEntry = (dispatch, entryToEdit) => {
+  dispatch({ type: 'SET_EDITING_ENTRY', payload: entryToEdit });
+};
+
+export { setTheme, setLanguage, setAspect, setCreatingEntry, setEditingEntry };

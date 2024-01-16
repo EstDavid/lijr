@@ -21,7 +21,7 @@ function journalReducer (state, action) {
       return {
         ...state,
         entries: state.entries.filter(
-          (entry) => entry._id !== action.payload._id
+          (entry) => entry._id !== action.payload
         ),
       };
     case 'SET_ASPECTS':
