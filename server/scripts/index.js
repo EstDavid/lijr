@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const { GenericAspect } = require('../models/aspects');
 const Entry = require('../models/entry');
-const { journalEntries, user1 } = require('./mockData');
+const { user1, user2, journalEntries1, journalEntries2 } = require('./mockData');
 const mongoose = require('mongoose');
 
 let user;
@@ -34,10 +34,10 @@ const clearDatabase = async () => {
   }
 };
 
-const createUser = async () => {
+const createUser = async (mockUser) => {
   try {
-    const hashedPassword = await bcrypt.hash(user1.password, 10);
-    user = new User({ ...user1, password: hashedPassword });
+    const hashedPassword = await bcrypt.hash(mockUser.password, 10);
+    user = new User({ ...mockUser, password: hashedPassword });
     await user.save();
     console.log('User created successfully.');
   } catch (error) {
@@ -45,8 +45,8 @@ const createUser = async () => {
   }
 };
 
-const createJournalEntries = async () => {
-  const entries = journalEntries.map(entry => {
+const createJournalEntries = async (mockEntries) => {
+  const entries = mockEntries.map(entry => {
     return { ...entry, user: user._id };
   });
   try {
@@ -58,8 +58,10 @@ const createJournalEntries = async () => {
 
 (async () => {
   await clearDatabase();
-  await createUser();
-  await createJournalEntries();
+  await createUser(user1);
+  await createJournalEntries(journalEntries1);
+  await createUser(user2);
+  await createJournalEntries(journalEntries2);
   await mongoose.disconnect();
   process.exit();
 })();
