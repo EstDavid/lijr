@@ -4,6 +4,7 @@ import { UiContext } from '@/context/contexts/UiContext';
 import EntryPreview from './EntryPreview';
 import { getYear, getDate } from '@/utils/entryFormats';
 import entriesService from '@/services/entries';
+import { FiltersContext } from '@/context/contexts/FiltersContext';
 
 // EntriesPanel component
 const EntriesPanel = () => {
@@ -12,6 +13,7 @@ const EntriesPanel = () => {
     dispatch: journalDispatch,
     removeEntry
   } = useContext(JournalContext);
+  const { state: filtersState } = useContext(FiltersContext);
   const { dispatch: uiDispatch, setEditingEntry } = useContext(UiContext);
   if (journalState.entries.length === 0) return <></>;
 
@@ -25,10 +27,13 @@ const EntriesPanel = () => {
       removeEntry(journalDispatch, id);
     }
   };
+  const entryList = journalState.entries
+    .filter((entry) => {
+      if (filtersState.tags.size === 0) return true;
+      return entry.tags.some((tag) => filtersState.tags.has(tag));
+    })
+    .sort((a, b) => new Date(getDate(b)) - new Date(getDate(a)));
 
-  const entryList = journalState.entries.sort(
-    (a, b) => new Date(getDate(b)) - new Date(getDate(a))
-  );
   return (
     <div id="entries-panel" className="container">
       {entryList.map((entry, index) => {

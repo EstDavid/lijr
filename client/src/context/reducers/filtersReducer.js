@@ -1,5 +1,10 @@
 function filtersReducer (state, action) {
   switch (action.type) {
+    case 'SET_TAGS':
+      return {
+        ...state,
+        tags: action.payload,
+      };
     case 'ADD_ASPECT':
       return {
         ...state,

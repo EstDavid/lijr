@@ -1,5 +1,5 @@
-const clearCategories = (dispatch) => {
-  dispatch({ type: 'CLEAR_TAGS' });
+const setTags = (dispatch, tags) => {
+  dispatch({ type: 'SET_TAGS', payload: tags });
 };
 
 const addAspect = (dispatch, aspect) => {
@@ -31,7 +31,7 @@ const setVibrationMax = (dispatch, vibrationMax) => {
 };
 
 export {
-  clearCategories,
+  setTags,
   addAspect,
   removeAspect,
   clearAspects,

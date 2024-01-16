@@ -1,11 +1,11 @@
-import Categories from './Categories';
+import Tags from './Tags';
 import Timeline from './Timeline';
 import VibrationBar from './VibrationBar';
 
 // Sidebar component
 const Sidebar = () => (
   <div id="sidebar" className="container">
-    <Categories />
+    <Tags />
     <Timeline />
     <VibrationBar />
   </div>

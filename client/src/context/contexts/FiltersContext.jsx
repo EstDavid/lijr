@@ -1,7 +1,7 @@
 import { createContext, useReducer } from 'react';
 import filtersReducer from '../reducers/filtersReducer';
 import {
-  clearCategories,
+  setTags,
   addAspect,
   removeAspect,
   clearAspects,
@@ -12,7 +12,7 @@ import {
 } from '../actions/filtersActions';
 
 const initialState = {
-  tags: [],
+  tags: new Set([]),
   aspects: [],
   timelineFrom: null,
   timelineTo: null,
@@ -30,7 +30,7 @@ const FiltersProvider = ({ children }) => {
       value={{
         state,
         dispatch,
-        clearCategories,
+        setTags,
         addAspect,
         removeAspect,
         clearAspects,
