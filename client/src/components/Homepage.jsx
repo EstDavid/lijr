@@ -19,7 +19,14 @@ const Homepage = () => {
               </div>
             </div>
           </div>
-          <div id="homepage-text-descriptions"></div>
+          <div id="homepage-text-buttons">
+            <button className="journal-button button-login">
+              <Link to="/login">Login</Link>
+            </button>
+            <button className="journal-button button-signup">
+              <Link to="/signup">Sign Up</Link>
+            </button>
+          </div>
         </div>
         <div id="journal-container">
           <div id="journal-outline">
@@ -27,17 +34,11 @@ const Homepage = () => {
               {lines.map((line) => (
                 <div className="journal-line" key={line}></div>
               ))}
-              <button className="journal-button">
-                <Link to="/login">Login</Link>
-              </button>
             </div>
             <div className="journal-pages journal-pages-right">
               {lines.map((line) => (
                 <div className="journal-line" key={line}></div>
               ))}
-              <button className="journal-button">
-                <Link to="/signup">Sign Up</Link>
-              </button>
             </div>
           </div>
         </div>
