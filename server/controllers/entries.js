@@ -18,13 +18,14 @@ async function getEntries (req, res) {
 async function addEntry (req, res) {
   try {
     const { _id } = req.user;
-    const { title, textBody, journaledDate, visibility } = req.body;
+    const { title, textBody, journaledDate, visibility, tags } = req.body;;
     const entry = new Entry({
       user: _id,
       title,
       textBody,
       journaledDate,
-      visibility
+      visibility,
+      tags
     });
     await entry.save();
     const user = await User.findByIdAndUpdate(
@@ -76,11 +77,11 @@ async function editEntry (req, res) {
   try {
     const { _id } = req.user;
     const { entryId } = req.params;
-    const { title, textBody, journaledDate, visibility } = req.body;
+    const { title, textBody, journaledDate, visibility, tags } = req.body;
 
     const updatedEntry = await Entry.findOneAndUpdate(
       { _id: entryId, user: _id },
-      { $set: { title, textBody, journaledDate, visibility } },
+      { $set: { title, textBody, journaledDate, visibility, tags } },
       { new: true }
     );
     res.status(201).json({ entry: updatedEntry });
@@ -128,8 +129,8 @@ async function deleteEntry (req, res) {
 
     await Entry.findOneAndDelete({ _id: entryId, user: _id });
 
-    const user = await User.findByIdAndUpdate(
-      id,
+    await User.findByIdAndUpdate(
+      _id,
       { $pull: { entries: entryId } },
       { new: true }
     );
@@ -140,8 +141,9 @@ async function deleteEntry (req, res) {
       { new: true }
     );
 
-    res.json({ user });
+    res.status(200).json({});
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 }
