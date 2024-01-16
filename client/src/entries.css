@@ -80,20 +80,19 @@
   flex: 1;
   width: auto;
   display: flex;
-  align-items: center;
-  background-color: var(--color-grayscale-400);
-  border: 1px solid var(--color-information-500);
+  align-items: start;
+  border: 1px solid var(--color-brand-200);
   border-radius: 1000000px;
   cursor: pointer;
   padding-left: 40px;
   h3 {
-    color: var(--color-information-200);
+    color: var(--color-brand-100);
     font-style: italic;
   }
 }
 
 .new-entry-form:hover {
-  background-color: var(--color-grayscale-300);
+  background-color: var(--color-grayscale-400);
   border-width: 2px;
   padding-left: 39px;
 }
@@ -182,7 +181,7 @@
   justify-content: space-between;
   .button-cancel {
     background-color: var(--color-grayscale-200);
-color: var(--color-grayscale-500)
+    color: var(--color-grayscale-500)
   }
 }
 

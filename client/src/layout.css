@@ -2,7 +2,6 @@
   height: var(--height-dashboard-header);
   position: sticky;
   top: 0;
-  background-color: var(--color-grayscale-400);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -13,6 +12,9 @@
   width: var(--width-sidebar);
   height: calc(100vh - var(--height-dashboard-header));
   overflow: hidden;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
   button {
     background-color: var(--color-brand-300);
     width: 100%;
@@ -36,6 +38,14 @@
     color: var(--color-grayscale-400);
   }
 
+  button.signout{
+    font-size: larger;
+    padding: 15px 0px;
+    background-color: transparent;
+    color: var(--color-information-100);
+    border: 1px solid var(--color-information-500);
+  }
+  
   input[type="checkbox"] {
     margin-right: 10px;
   }
