@@ -32,6 +32,16 @@ const EntriesPanel = () => {
       if (filtersState.tags.size === 0) return true;
       return entry.tags.some((tag) => filtersState.tags.has(tag));
     })
+    .filter((entry) => {
+      return filtersState.timelineFrom
+        ? new Date(getDate(entry)) >= filtersState.timelineFrom
+        : true;
+    })
+    .filter((entry) => {
+      return filtersState.timelineTo
+        ? new Date(getDate(entry)) <= filtersState.timelineTo
+        : true;
+    })
     .sort((a, b) => new Date(getDate(b)) - new Date(getDate(a)));
 
   return (

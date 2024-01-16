@@ -21,9 +21,19 @@ const Tags = () => {
     setTags(filtersDispatch, new Set(updatedTags)); // Pass selected tags to parent component if needed
   };
 
+  const handleClearTags = () => {
+    setTags(filtersDispatch, new Set());
+    setSelectedTags([]);
+  };
+
   return (
     <div id="Tags" className="">
       <h3>Tags</h3>
+      <div>
+        <button type="button" onClick={handleClearTags}>
+          Clear trags
+        </button>
+      </div>
       {journalState.tags.size === 0 ? (
         <p>No tags yet</p>
       ) : (
