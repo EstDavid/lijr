@@ -48,3 +48,15 @@ Server: GraphQL
 Dev dependencies:
 
 - @faker-js/faker &rarr; Allows generation of mock data
+
+## Ideas for new features
+
+- Add a light theme (use a similar background color as the site https://dribbble.com/)
+- Implement a mentions system such as in [here](https://www.algolia.com/doc/ui-libraries/autocomplete/solutions/rich-text-box-with-mentions-and-hashtags/) to link journal entries with tags, or implement the whole life aspects and measurables part of the app
+- Create a list of questions that randomly pop up in the user's dashboard, to trigger journal entries
+- Implement an [emotional level of vibration](https://i.pinimg.com/originals/dc/6e/6a/dc6e6a6e7840023ef6595fd47298ae5b.jpg) system to link journal entries with a certain emotional state
+- Two possible ways of linking entries to emotional states:
+  - AI: Make an api request to evaluate the emotional state of an entry
+  - Implement a [circular menu](https://freefrontend.com/css-circle-menus/) so that when the user saves a journal entry, they have to necessarily click on the emotional state they feel that entry is about
+- Give the user the possibility to save their data locally
+- Create a community feature so people with similar emotions and mood can connect, share and help each other
