@@ -1,5 +1,6 @@
 #homepage {
-  background-color: var(--color-grayscale-400);
+  --journal-height: 400px;
+  background-color: var(--color-grayscale-500);
   height: 100vh;
 }
 
@@ -9,8 +10,12 @@
 }
 
 #homepage-text {
+  height: var(--journal-height);
   margin-top: var(--margin-top-homepage-body);
-  padding: 60px;
+  padding: 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #homepage-text-header {
@@ -38,6 +43,7 @@
   padding: 20px 30px;
   font-size: 180px;
   background-color: var(--color-grayscale-500);
+  border: 1px solid var(--color-grayscale-200);
   border-radius: 20px;
 }
 
@@ -48,11 +54,11 @@
 
 #journal-outline {
   position: absolute;
-  height: 400px;
+  height: var(--journal-height);
   width: 600px;
 
   /* left: -140px; */
-  border: 2px solid var(--color-brand-400);
+  border: 2px solid var(--color-brand-300);
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -63,7 +69,6 @@
 #homepage-text-buttons {
   display: flex;
   justify-content: space-between;
-  padding: 30px;
   gap: 20px;
   button {
     padding: 10px 20px;
@@ -91,7 +96,7 @@
 .journal-pages {
   height: 98%;
   width: 49%;
-  background-color: var(--color-grayscale-200);
+  background-color: var(--color-grayscale-400);
   border-radius: 20px;
   padding: 20px;
   overflow: auto;
@@ -99,7 +104,6 @@
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-
 }
 
 .journal-pages-left {
@@ -113,6 +117,30 @@
 .journal-line {
   height: 1px;
   width: 100%;
-  background-color: var(--color-grayscale-500);
+  background-color: var(--color-grayscale-200);
   margin: 10px 0;
+}
+
+.journal-page-box {
+  position: absolute;
+  display: grid;
+  grid-template-rows: 180px 180px;
+  grid-template-columns: 1fr;
+  color: var(--color-information-200)
+}
+.journal-page-feature {
+  div:first-child {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--padding-general)
+  }
+  svg {
+    font-size: 200%;
+  }
+  h2 {
+    font-size: 120%;
+    font-weight: 600;
+  }
+  
 }

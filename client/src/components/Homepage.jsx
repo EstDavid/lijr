@@ -1,7 +1,52 @@
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBrain,
+  faBullseye,
+  faCompass,
+  faHeart
+} from '@fortawesome/free-solid-svg-icons';
+
+const Feature = ({ icon, title, description }) => {
+  return (
+    <div className="journal-page-feature">
+      <div>
+        <FontAwesomeIcon icon={icon} />
+        <h2>{title}</h2>
+      </div>
+      <h>{description}</h>
+    </div>
+  );
+};
 
 const Homepage = () => {
   const lines = [...Array(10).keys()];
+
+  const features = [
+    {
+      icon: faCompass,
+      title: 'Life GPS',
+      description:
+        "Track your life's journey with LIJR. Set goals and track your progress."
+    },
+    {
+      icon: faBrain,
+      title: 'Clear your mind',
+      description:
+        'Write down your thoughts and feelings. LIJR is your personal journal'
+    },
+    {
+      icon: faHeart,
+      title: 'Track your emotions',
+      description: 'Lijr allows you to track and connect with your emotions.'
+    },
+    {
+      icon: faBullseye,
+      title: 'Support your growth',
+      description: 'Track your goals and find what motivates you.'
+    }
+  ];
+
   return (
     <div id="homepage">
       <div id="homepage-body">
@@ -34,11 +79,21 @@ const Homepage = () => {
               {lines.map((line) => (
                 <div className="journal-line" key={line}></div>
               ))}
+              <div className="journal-page-box">
+                {features.slice(0, 2).map((feature, index) => (
+                  <Feature key={index} {...feature} />
+                ))}
+              </div>
             </div>
             <div className="journal-pages journal-pages-right">
               {lines.map((line) => (
                 <div className="journal-line" key={line}></div>
               ))}
+              <div className="journal-page-box">
+                {features.slice(2).map((feature, index) => (
+                  <Feature key={index} {...feature} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
