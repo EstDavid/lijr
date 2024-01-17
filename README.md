@@ -31,8 +31,6 @@ The app will allow the user to filter their journal entries by different life as
 
 A timeline feature allows the user to get a general view of how they have felt or what kinds of things have happened at a certain moment in their life.
 
-An AI feature generates triggering questions for the user to journal about, as well as evaluate their emotional state based on what they write.
-
 ## Tech Stack
 
 ### Frontend
@@ -40,9 +38,7 @@ An AI feature generates triggering questions for the user to journal about, as w
 Web client
 Framework: React and plain CSS
 State management: Redux
-Rich text editor: TinyMCE
-AI: Chat GPT API
-Chart visualization: ReactVis
+Tagging manager: react-tag-input
 
 ### Backend
 
