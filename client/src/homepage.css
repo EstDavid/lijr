@@ -142,5 +142,9 @@
     font-size: 120%;
     font-weight: 600;
   }
+  h3 {
+    font-size: 100%;
+    font-weight: 600;
+  }
   
 }

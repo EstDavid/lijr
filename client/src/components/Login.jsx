@@ -4,9 +4,11 @@ import { UserContext } from '@/context/contexts/UserContext';
 import userService from '@/services/user';
 import entriesService from '@/services/entries';
 import InputField from './InputField';
+import { JournalContext } from '@/context/contexts/JournalContext';
 
 const Login = () => {
-  const { dispatch, login } = useContext(UserContext);
+  const { dispatch: userDispatch, login } = useContext(UserContext);
+  const { dispatch: entriesDispatch, setEntries } = useContext(JournalContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,11 +23,15 @@ const Login = () => {
 
       window.localStorage.setItem('loggedUser', JSON.stringify(userResponse));
 
-      login(dispatch, userResponse.user);
+      login(userDispatch, userResponse.user);
 
       userService.setToken(userResponse.token);
       entriesService.setToken(userResponse.token);
-      navigate('/');
+
+      entriesService.getAll().then((data) => {
+        setEntries(entriesDispatch, data.entries);
+        navigate('/');
+      });
     } catch (error) {
       console.error(error);
     }

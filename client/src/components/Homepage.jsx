@@ -14,7 +14,7 @@ const Feature = ({ icon, title, description }) => {
         <FontAwesomeIcon icon={icon} />
         <h2>{title}</h2>
       </div>
-      <h>{description}</h>
+      <h3>{description}</h3>
     </div>
   );
 };
