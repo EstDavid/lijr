@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '@/context/contexts/UserContext';
-import Tags from './Tags';
-import Timeline from './Timeline';
-import SearchBar from './SearchBar';
+import Tags from './Sidebar/Tags';
+import Timeline from './Sidebar/Timeline';
+import SearchBar from './Sidebar/SearchBar';
 
 // Sidebar component
 const Sidebar = () => {
@@ -17,7 +17,7 @@ const Sidebar = () => {
   };
   return (
     <div id="sidebar" className="container">
-      <div>
+      <div className="filters-container">
         <SearchBar />
         <Tags />
         <Timeline />

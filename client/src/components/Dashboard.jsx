@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { UiContext } from '@/context/contexts/UiContext';
 import EntryForm from './Dashboard/EntryForm';
-import Sidebar from './Dashboard/Layout/Sidebar/Sidebar';
+import Sidebar from './Dashboard/Sidebar';
 import PanelDashboard from './Dashboard/PanelDashboard/PanelDashboard';
 
 const Dashboard = () => {

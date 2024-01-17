@@ -1,5 +1,5 @@
-import PanelHeader from './PanelHeader/PanelHeader';
-import EntriesPanel from './EntriesPanel/EntriesPanel';
+import PanelHeader from './PanelHeader';
+import EntriesPanel from './EntriesPanel';
 
 // PanelDashboard component
 const PanelDashboard = () => {
