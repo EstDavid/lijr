@@ -13,7 +13,13 @@ const NewEntryPanel = () => {
         <h3>{`${userState.user.firstName}, how are you feeling today?`}</h3>
       </div>
       <div className="new-entry-form">
-        <h3 onClick={() => setCreatingEntry(dispatch, true)}>Today...</h3>
+        <h3
+          onClick={() => {
+            setCreatingEntry(dispatch, true);
+          }}
+        >
+          Today...
+        </h3>
       </div>
     </div>
   );

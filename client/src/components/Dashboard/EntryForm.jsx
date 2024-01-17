@@ -7,49 +7,6 @@ import { getInputDateFormat, getLongDate } from '@/utils/entryFormats';
 import entriesService from '@/services/entries';
 import TaggingPanel from './TaggingPanel';
 
-const categories = [
-  'Personal',
-  'Decisions',
-  'Work',
-  'Health',
-  'Relationships',
-  'Family',
-  'Friends',
-  'Hobbies',
-  'Travel',
-  'Spirituality',
-  'Finances',
-  'Education',
-  'Career',
-  'Other'
-];
-
-// const aspects = [
-//   {
-//     aspectType: 'Personal',
-//     title: 'Going to the gym'
-//   },
-//   {
-//     aspectType: 'Work',
-//     title: 'Meeting with my boss'
-//   },
-//   {
-//     aspectType: 'Hobbies',
-//     title: 'Playing the guitar'
-//   },
-//   {
-//     aspectType: 'Hobbies',
-//     title: 'Playing beach volleyball'
-//   }
-// ];
-
-const suggestions = categories.map((category) => {
-  return {
-    id: category,
-    text: category
-  };
-});
-
 const EntryForm = () => {
   const {
     dispatch: journalDispatch,
@@ -182,7 +139,6 @@ const EntryForm = () => {
           />
           <div className="entry-form-aspects">
             <TaggingPanel
-              initialSuggestions={suggestions}
               entryTags={tags}
               handleTagsChange={handleTagsChange}
             />

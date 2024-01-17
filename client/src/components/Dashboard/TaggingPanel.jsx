@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
+import { JournalContext } from '@/context/contexts/JournalContext';
 
 const categories = [
   'Personal',
@@ -58,11 +59,21 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-const TaggingPanel = ({ entryTags, initialSuggestions, handleTagsChange }) => {
+const TaggingPanel = ({ entryTags, handleTagsChange }) => {
   const [tags, setTags] = useState(
     entryTags.map((tag) => ({ id: tag, text: tag }))
   );
-  const [suggestions] = useState(initialSuggestions);
+
+  const { state: journalState } = useContext(JournalContext);
+
+  const [suggestions] = useState(
+    Array.from(journalState.tags).map((tag) => {
+      return {
+        id: tag,
+        text: tag
+      };
+    })
+  );
 
   const handleDelete = (i) => {
     setTags(tags.filter((tag, index) => index !== i));
